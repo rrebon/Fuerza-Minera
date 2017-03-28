@@ -1,0 +1,120 @@
+
+
+/*form-control ESTA MODIFICADO DESDE BOOTSTRAP*/	
+
+
+@font-face
+{
+   font-family: "bebasKai";
+   src: url( {{ asset("fuentes/bebasKai/bebaskai.eot") }});
+   src: url( {{ asset("fuentes/bebasKai/bebaskai.eot") }}) format("embedded-opentype"),
+        url( {{ asset("fuentes/bebasKai/bebaskai.woff") }}) format("woff"),
+        url({{ asset("fuentes/bebasKai/bebaskai.ttf") }}) format("truetype"),
+        url({{ asset("fuentes/bebasKai/bebaskai.svg#bebas_kairegular") }}) format("svg");
+}
+@font-face
+{
+   font-family: "biko";
+   src: url({{ asset("fuentes/biko/biko.eot") }});
+   src: url({{ asset("fuentes/biko/biko.eot") }}) format("embedded-opentype"),
+        url({{ asset("fuentes/biko/biko.woff") }}) format("woff"),
+        url({{ asset("fuentes/biko/biko.ttf") }}) format("truetype"),
+        url({{ asset("fuentes/biko/biko.svg#biko")}}) format("svg");
+}
+
+.container-fluid-propio{
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.logo{
+	position: relative;
+}
+
+.menu{ /*Todo el bloque del menu, contiene las <a>*/
+	position: relative;
+	top: -50px;
+}
+
+.menuCategorias{
+	position: absolute;
+	top: 115px;
+	margin-left: 410px;
+	font-size: 23px;
+}
+
+a{
+	margin: 0 60px 0 0;
+	color: black;
+	text-decoration: none;
+	font-family: "bebaskai";
+	font-size: 19px;
+}
+
+a:hover{
+	color: black;
+	border-bottom:solid;
+	border-bottom-color: #F0D431;
+}
+
+.registro{
+	position: absolute;
+	top: 25px;
+	font-size: 17px;
+}
+
+.titulo{
+	position: absolute;
+	top: 700px;
+	margin-left: 150px;
+	color: black;
+}
+
+ /*span{
+	font-size: 45px;
+	font-family: "biko";
+	background: rgb(255, 255, 255);
+	background: rgba(255, 255, 255, 0.5);
+	padding: 10px;
+	line-height: 74px;
+}*/
+
+
+h1{
+	 font-family: "bebaskai";
+	 font-size: 52px;
+	 color: #F0D431;
+}
+
+p{
+	position: absolute;
+	font-family: "biko";
+	font-size: 18px;
+}
+
+h2,h3, h5,h6{
+	font-family: "biko";
+}
+
+label{
+	color: white;
+	font-size: 13px;
+}
+
+.boton{
+	color: white;
+	background-color: #F0D431;
+	border:none;
+}
+
+.bordeTrab{
+	border-bottom:solid;
+	border-bottom-color: #F0D431;
+}
+
+.icono{
+	position: relative;
+}
