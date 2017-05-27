@@ -11,6 +11,6 @@
 
  Es una aplicación web desarrollada en laravel 5.4 que comprende la web institucional y ciertos pedidos particulares que la empresa solicitó.
 
-## License
+## Licencia
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
