@@ -5,7 +5,7 @@
                 <h1>Fotos <small>{{$title}}</small></h1>
 			</div>
 			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-				<a href="fotos.html"><button class=" btn btn-lg boton">Volver</button></a>
+				<a href="{{ url()->previous() }}"><button class=" btn btn-lg boton">Volver</button></a>
 			</div>
 		</div>
 			<?php
@@ -29,8 +29,8 @@
        			@endif
        				   								
 			@endforeach
-				
-		 @if($i!=0)
+			
+		 @if($i!=0)		 	
 		 	</div>
 		 @endif
 

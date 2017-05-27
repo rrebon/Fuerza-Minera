@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class User extends Authenticatable
 {
@@ -29,5 +30,12 @@ class User extends Authenticatable
     
     public function ofertaLaboral(){
     	return $this->belongsToMany('OfertaLaboral');
+    }
+    
+    /*
+     * @return todos los modelos que puedan contener un usuario. 
+     */
+    public function userable(){
+    	return $this->morphTo();
     }
 }

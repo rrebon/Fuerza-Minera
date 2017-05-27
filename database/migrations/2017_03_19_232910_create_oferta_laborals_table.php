@@ -20,8 +20,8 @@ class CreateOfertaLaboralsTable extends Migration
             $table->string('texto');
             $table->integer('idUsuarioCreacion');
             $table->integer('idUsuarioPublicacion');
-            $table->dateTime('fechaAlta');
-            $table->dateTime('fechaBaja');            
+            $table->date('fechaAlta');
+            $table->date('fechaBaja');            
             
             $table->timestamps();
         });

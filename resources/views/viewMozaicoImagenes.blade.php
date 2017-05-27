@@ -9,10 +9,10 @@
                 <h1>Fotos <small>{{$title}}</small></h1>
 			</div>
 			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-				<a href="fotos.html"><button class=" btn btn-lg boton">Volver</button></a>
+				<a href="{{ url()->previous() }}"><button class=" btn btn-lg boton">Volver</button></a>
 			</div>
 		</div>
-      <div>
+      </div>
 		<div class="container">
         	<?php         	
 			$i=0; //contador
@@ -20,6 +20,7 @@
 	       			
 	       			if($i===0)
 	       				echo '<div class="row">';
+	       			
 	       				echo "<div class='col-xs-6 col-sm-4 col-md-4 col-lg-4 thumbnail'>
 	       						<a href='{$d['enlace']}'><img src='{$d['imagen']}'></a>
 	       						<div class='caption'>
@@ -32,7 +33,7 @@
 	       			echo '</div>';	       			
 	       			$i=0;
 	       		}    			
-     		}
+     		}     		
      		if($i!=0)
      			echo '</div>';    			
       		?>

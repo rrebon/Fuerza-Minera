@@ -9,16 +9,16 @@ use phpDocumentor\Reflection\Types\This;
 class OfertaLaboral extends Model
 {
     protected $table = 'OfertasLaborales';
-    
-    const CREATED_AT = 'fechaCreacion';
-    const UPDATED_AT = 'fechaModificacion';
+    protected $primaryKey = 'idOferta';
     
     protected $fillable = array('titulo',    		
     							'texto',
+    							'intro',
     							'idUsuarioCreacion',
     							'idUsuarioPublicacion',
     							'fechaAlta',
-    							'fechaBaja'
+    							'fechaBaja',
+    							'urlArchivo'
     );
     
     public function usuarioCreacion(){
@@ -27,6 +27,6 @@ class OfertaLaboral extends Model
     
     public function  usuarioPublicacion(){
     	return $this->hasOne('App\User','id', 'idUsuarioPublicacion');
-    }   
+    } 
     
 }

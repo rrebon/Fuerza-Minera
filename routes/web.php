@@ -2,6 +2,8 @@
 
 //use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
+use App\OfertaLaboral;
+use App\Http\Controllers\OfertasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
@@ -121,22 +124,22 @@ Route::get('retro', function () {
 			'directorio' => 'img/retro/'
 	]);
 });
-	Route::get('varias', function () {
-		return view('viewGaleria', ['title' => 'Varias',
-				'columnas' => 4,
-				'directorio' => 'img/varias/'
-		]);
-	});
+Route::get('varias', function () {
+	return view('viewGaleria', ['title' => 'Varias',
+			'columnas' => 4,
+			'directorio' => 'img/varias/'
+	]);
+});
 
 Route::get('fotos', function(){
 	$data = array(
 				['titulo'=> 'Retro Escabadoras','imagen'=>'img/retro/0.jpg', 'enlace'=>url('/retro')],
 				['titulo'=> 'Camiones','imagen'=>'img/camiones/0.jpg', 'enlace'=>url('/camiones')],
-				['titulo'=> 'Cargadores Frontales','imagen'=>'img/cargFron/2.jpg', 'enlace'=>url('/carFron')],
-				['titulo'=> 'Perforadoras','imagen'=>'img/perfora/0.jpg', 'enlace'=>url('/perfora')],
+				['titulo'=> 'Cargadores Frontales','imagen'=>'img/cargFron/2.jpg', 'enlace'=>url('/cargFron')],
+				['titulo'=> 'Perforadoras','imagen'=>'img/perfora/0.jpg', 'enlace'=>url('/perforadoras')],
 				['titulo'=> 'Mina Aguilar','imagen'=>'img/minaAguilar/1.jpg', 'enlace'=>url('/minaAguilar')],
 				['titulo'=> 'Mina Bajo de la Alumbrera','imagen'=>'img/minaAlumbrera/0.jpg', 'enlace'=>url('/minaAlumbrera')],
-				['titulo'=> 'Mina Caposo','imagen'=>'img/minaCasposo/0.jpg', 'enlace'=>url('/minaCaposo')],
+				['titulo'=> 'Mina Caposo','imagen'=>'img/minaCasposo/0.jpg', 'enlace'=>url('/minaCasposo')],
 				['titulo'=> 'Mina Cerro Negro','imagen'=>'img/minaNegro/0.jpg', 'enlace'=>url('/minaNegro')],
 				['titulo'=> 'Mina Cerro Vanguardia','imagen'=>'img/minaVang/0.jpg', 'enlace'=>url('/minaVang')],
 				['titulo'=> 'Mina Farallon','imagen'=>'img/minaFarallon/0.jpg', 'enlace'=>url('/minaFarallon')],
@@ -152,30 +155,58 @@ Route::get('fotos', function(){
 	]);
 });
 
+
 Route::get('videos', function(){
-	return view('viewVideos');
+	$data = array(
+			['nombre'=>'Zonas de perforación', 'url'=>'https://www.youtube.com/embed/P2mMfVn_66E'],
+			['nombre'=>'Tronadura en Chuquicamata', 'url'=>'https://www.youtube.com/embed/DxtdpGXS7-A'],
+			['nombre'=>'Tronadura por enaex', 'url'=>'https://www.youtube.com/embed/o3-IsrrsvaM'],
+			['nombre'=>'Tronaduras a lo largo de los años', 'url'=>'https://www.youtube.com/embed/i9Ovce2qhQ0'],
+			['nombre'=>'Voladura a 120 fps', 'url'=>'https://www.youtube.com/embed/zxdmMlPomXA'],
+			['nombre'=>'Voladura a rajo abierto', 'url'=>'https://www.youtube.com/embed/dP0y9gEcWG8'],
+			['nombre'=>'Voladura controlada', 'url'=>'https://www.youtube.com/embed/5APgG9WgEcI'],
+			['nombre'=>'Voladura en mina Toquepala', 'url'=>'https://www.youtube.com/embed/VHnLl-Sje14'],
+			['nombre'=>'Voladura en HD', 'url'=>'https://www.youtube.com/embed/ZMsCszRs0hc'],
+			['nombre'=>'Voladura Interior Mina', 'url'=>'https://www.youtube.com/embed/Oo37BMJeWxo'],
+			['nombre'=>'Voladura record en Tacoma', 'url'=>'https://www.youtube.com/embed/5UmlmC2lPfI'],
+			['nombre'=>'Voladuras 2', 'url'=>'https://www.youtube.com/embed/SKQphJJLq7M'],
+			['nombre'=>'Voladuras 1', 'url'=>'https://www.youtube.com/embed/VClUSugHHLM'],
+			['nombre'=>'Voladuras Austin Powder', 'url'=>'https://www.youtube.com/embed/Xv44oPXy74E'],
+			['nombre'=>'Voladuras en mina de oro en Australia', 'url'=>'https://www.youtube.com/embed/LZqwO0bdP7s'],
+			['nombre'=>'Voladuras', 'url'=>'https://www.youtube.com/embed/5lPX_VqMfQU'],
+			['nombre'=>'Maquinas Gigantes', 'url'=>'https://www.youtube.com/embed/0vmOI4vYQ8I'],
+			['nombre'=>'¿Qué es el mineral de hierro?', 'url'=>'https://www.youtube.com/embed/Jv7jg0BW8Bk'],
+			['nombre'=>'Chancado Primario R0', 'url'=>'https://www.youtube.com/embed/L5kOLcJ1xqE'],
+			['nombre'=>'Exploraciones mineras, Atacama, Julio 2015', 'url'=>'https://www.youtube.com/embed/1G-sf65wE6s'],
+			['nombre'=>'Diavik Diamonds', 'url'=>'https://www.youtube.com/embed/fGsWHKVWOl8'],
+			['nombre'=>'Areas de tratamiento de mineral en Riotinto', 'url'=>'https://www.youtube.com/embed/lfswfT7dWtQ'],
+			['nombre'=>'Simuladores en Codelco', 'url'=>'https://www.youtube.com/embed/xo-CsID8Mmw'],
+			['nombre'=>'Nuevo nivel en mina Traspaso Andina', 'url'=>'https://www.youtube.com/embed/UDjhWxY79q0'],
+			['nombre'=>'SafeWork at Glencore', 'url'=>'https://www.youtube.com/embed/KjvROQFHR4Y'],
+			['nombre'=>'Remote Operations Delivering High Performance at High Altitude', 'url'=>'https://www.youtube.com/embed/BZorAVTUIu8'],
+			['nombre'=>'Sublevel Caving Mining Method', 'url'=>'https://www.youtube.com/embed/TnA2mZ9N74s'],
+			['nombre'=>'Tambor aglomerador', 'url'=>'https://www.youtube.com/embed/PsWtYxIbnaM'],
+			['nombre'=>'Grasberg Mine', 'url'=>'https://www.youtube.com/embed/l0EWgO0lCek'],
+			['nombre'=>'BHP Billiton', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns']			
+	);
+	
+	return view('viewVideos', ['titulo'=>'Videos', 'columnas'=>3,'videos'=>$data]);
 });
 
-Route::get('trabajo', function(){
-	return view('viewTrabajo');
-});
+Route::get('/noticias', 'NoticiasController@index');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
- 
-//Route::get('/post', 'PostController@index');
-
-Route::resource('post', 'PostController');
 
 Route::resource('ofertaLaboral', 'OfertasController');
 
-Route::get('ofertaLaboral/borrar/{id}', 
-		   ['as'=> 'ofertas/borrar', 'uses'=> 'OfertasController@borrar']);
-Route::post('ofertaLaboral/buscar', ['as' => 'ofertas/buscar', 'uses' => 'OfertasController@buscar']);
+Route::get("ofertaLaboral/create", 'OfertasController@create');
 
-// Route::get('ofertas/index', function(){
-// 	return view('listTrabajos');
-// });
+Route::get('ofertaLaboral/{idOferta}', 'OfertasController@show');
+
+Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit');
+
+Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete');
+
+
+
 
 

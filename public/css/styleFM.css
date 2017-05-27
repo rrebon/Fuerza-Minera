@@ -1,25 +1,24 @@
 
-
 /*form-control ESTA MODIFICADO DESDE BOOTSTRAP*/	
 
 
 @font-face
 {
    font-family: "bebasKai";
-   src: url( {{ asset("fuentes/bebasKai/bebaskai.eot") }});
-   src: url( {{ asset("fuentes/bebasKai/bebaskai.eot") }}) format("embedded-opentype"),
-        url( {{ asset("fuentes/bebasKai/bebaskai.woff") }}) format("woff"),
-        url({{ asset("fuentes/bebasKai/bebaskai.ttf") }}) format("truetype"),
-        url({{ asset("fuentes/bebasKai/bebaskai.svg#bebas_kairegular") }}) format("svg");
+   src: url("../fuentes/bebasKai/bebaskai.eot");
+   src: url("../fuentes/bebasKai/bebaskai.eot") format("embedded-opentype"),
+        url("../fuentes/bebasKai/bebaskai.woff") format("woff"),
+        url("../fuentes/bebasKai/bebaskai.ttf") format("truetype"),
+        url("../fuentes/bebasKai/bebaskai.svg#bebas_kairegular") format("svg");
 }
 @font-face
 {
    font-family: "biko";
-   src: url({{ asset("fuentes/biko/biko.eot") }});
-   src: url({{ asset("fuentes/biko/biko.eot") }}) format("embedded-opentype"),
-        url({{ asset("fuentes/biko/biko.woff") }}) format("woff"),
-        url({{ asset("fuentes/biko/biko.ttf") }}) format("truetype"),
-        url({{ asset("fuentes/biko/biko.svg#biko")}}) format("svg");
+   src: url("../fuentes/biko/biko.eot");
+   src: url("../fuentes/biko/biko.eot") format("embedded-opentype"),
+        url("../fuentes/biko/biko.woff") format("woff"),
+        url("../fuentes/biko/biko.ttf") format("truetype"),
+        url("../fuentes/biko/biko.svg#biko") format("svg");
 }
 
 .container-fluid-propio{
@@ -102,6 +101,10 @@ h2,h3, h5,h6{
 label{
 	color: white;
 	font-size: 13px;
+}
+
+.etiquetaNegra{
+	color: black;
 }
 
 .boton{
