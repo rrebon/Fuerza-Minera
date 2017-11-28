@@ -13,8 +13,8 @@ class Videos extends Migration
      */
     public function up()
     {
-        Schema::create(function(Blueprint $table){
-        	$table->increments('idVideo');
+        Schema::create('videos',function(Blueprint $table){
+        	$table->increments('id');
         	
         	$table->string('nombre');
         	$table->string('url');
@@ -30,6 +30,6 @@ class Videos extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExist('videos');
     }
 }

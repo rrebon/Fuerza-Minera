@@ -17,8 +17,6 @@ class NoticiasController extends Controller
 	public function show($idNoticia){
 		$noticia = Noticia::find($idNoticia);
 		return view('noticia.viewNoticia', ['noticia'=>$noticia]);
-	}
-	
-	
+	}	
 	
 }

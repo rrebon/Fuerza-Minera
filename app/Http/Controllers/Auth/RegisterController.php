@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Persona;
+use App\Empresa;
 
 class RegisterController extends Controller
 {
@@ -53,6 +55,10 @@ class RegisterController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
+    
+    public function index(){    	
+    	 return view('auth.Registro');
+    }
 
     /**
      * Create a new user instance after a valid registration.
@@ -62,10 +68,40 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+    	$relacion;
+    	
+    	if (array_key_exists('razonSocial', $data)){
+    			$relacion = Empresa::create([
+    							'razonSocial' => $data['razonSocial'],
+    							'telefono' => $data['telefono'],
+    							'telefono2' => $data['telefono2'],
+    							'direccion' => $data['direccion'],
+    							'localidad' => $data['localidad']
+    						]);
+    	}else{
+    		$relacion=Persona::create([
+	    				'nombre' => $data['nombre'],
+	    				'apellido' => $data['apellido'],
+	    				'telefono' => $data['telefono']
+	    		]);
+	    	}
+	    
+	    $usuario = new User([
+       				'name' => $data['name'],
+            		'email' => $data['email'],
+            		'password' => bcrypt($data['password']),
+        			]);
+// 	    El User::create() genera el usuario y lo persiste en la BD
+// 	    $usuario = User::create([
+//        				'name' => $data['name'],
+//             		'email' => $data['email'],
+//             		'password' => bcrypt($data['password']),
+//         			]);
+		
+	    //guardo el usuario junto con la relacion
+	    $usuario->userable()->associate($relacion);
+	    $usuario->save();
+        return $usuario;
     }
+    
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Empresa extends Model
 {
@@ -14,4 +15,7 @@ class Empresa extends Model
     							'direccion',
     							'localidad'
     							);
+    public function user(){
+    	return morphOne('App\User', 'userable');
+    }
 }

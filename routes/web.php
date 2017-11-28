@@ -4,6 +4,8 @@
 use Illuminate\Support\Facades\Route;
 use App\OfertaLaboral;
 use App\Http\Controllers\OfertasController;
+use App\Http\Controllers\Auth\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,22 @@ use App\Http\Controllers\OfertasController;
 |
 */
 Auth::routes();
+
+/*
+ * Rutas de Prueba
+ */
+
+Route::get('/borrarSesion', function (){
+	
+// 	Session::flush();
+	$request->session()->flush();
+// 	Session::start();
+	return view('welcome');
+});
+
+/*
+ * Rutas Institucionales
+ */
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,13 +50,18 @@ Route::get('/contacto', function (){
 	return view('contacto');
 });
 
-Route::get('/registro', function (){
-	return view('registro');
-});
-
 Route::get('/home', function(){
 	return view('home');
 });
+
+//TODO: hacer controlador hacer
+Route::get('/info', function (){
+	return view('info');
+});
+
+/*
+ * Rutas de Minas y Galerias
+ */
 
 Route::get('minaAguilar', function () {
 	return view('viewGaleria', ['title' => 'Mina Aguilar',
@@ -131,6 +154,10 @@ Route::get('varias', function () {
 	]);
 });
 
+/*
+ * Rutas Multimediales
+ */
+//TODO: guardar registros del array en base de datos
 Route::get('fotos', function(){
 	$data = array(
 				['titulo'=> 'Retro Escabadoras','imagen'=>'img/retro/0.jpg', 'enlace'=>url('/retro')],
@@ -155,7 +182,7 @@ Route::get('fotos', function(){
 	]);
 });
 
-
+//TODO: guardar registros del array en base de datos
 Route::get('videos', function(){
 	$data = array(
 			['nombre'=>'Zonas de perforación', 'url'=>'https://www.youtube.com/embed/P2mMfVn_66E'],
@@ -193,19 +220,37 @@ Route::get('videos', function(){
 	return view('viewVideos', ['titulo'=>'Videos', 'columnas'=>3,'videos'=>$data]);
 });
 
+/*
+ * Rutas de Noticias
+ */
+
 Route::get('/noticias', 'NoticiasController@index');
 
-
+/*
+ * Rutas de Ofertas Laborales
+ */
 Route::resource('ofertaLaboral', 'OfertasController');
 
-Route::get("ofertaLaboral/create", 'OfertasController@create');
+Route::get("ofertaLaboral/create", 'OfertasController@create')->middleware('auth.basic');
 
 Route::get('ofertaLaboral/{idOferta}', 'OfertasController@show');
 
-Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit');
+Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit')->middleware('auth.basic');
 
-Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete');
+Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete')->middleware('auth.basic');
 
+/*
+ * Rutas de Regristro de Usuarios (Empresas y Personas)
+ */
+
+
+// Route::get('/registro', function (){
+// 	return view('auth.Registro');
+// });
+
+Route::resource('registro', 'Auth\RegisterController');
+
+// Route::get('/registro', 'Auth\RegisterController@index');
 
 
 

@@ -14,8 +14,9 @@ class UserMod extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table){
-        	$table->integer('userable_id');
-        	$table->string('userable_type');
+        	$table->morphs('userable');
+//         	$table->integer('userable_id');
+//         	$table->string('userable_type');
         });
     }
 

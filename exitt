@@ -1,0 +1,471 @@
+[1mdiff --git a/app/Empresa.php b/app/Empresa.php[m
+[1mindex 539fe19..fecf8f7 100644[m
+[1m--- a/app/Empresa.php[m
+[1m+++ b/app/Empresa.php[m
+[36m@@ -3,6 +3,7 @@[m
+ namespace App;[m
+ [m
+ use Illuminate\Database\Eloquent\Model;[m
+[32m+[m[32muse Illuminate\Database\Eloquent\Relations\MorphOne;[m
+ [m
+ class Empresa extends Model[m
+ {[m
+[36m@@ -14,4 +15,7 @@[m [mclass Empresa extends Model[m
+     							'direccion',[m
+     							'localidad'[m
+     							);[m
+[32m+[m[32m    public function user(){[m
+[32m+[m[41m    [m	[32mreturn morphOne('App\User', 'userable');[m
+[32m+[m[32m    }[m
+ }[m
+[1mdiff --git a/app/Http/Controllers/Auth/RegisterController.php b/app/Http/Controllers/Auth/RegisterController.php[m
+[1mindex c90b80f..947643d 100755[m
+[1m--- a/app/Http/Controllers/Auth/RegisterController.php[m
+[1m+++ b/app/Http/Controllers/Auth/RegisterController.php[m
+[36m@@ -6,6 +6,8 @@[m [muse App\User;[m
+ use App\Http\Controllers\Controller;[m
+ use Illuminate\Support\Facades\Validator;[m
+ use Illuminate\Foundation\Auth\RegistersUsers;[m
+[32m+[m[32muse App\Persona;[m
+[32m+[m[32muse App\Empresa;[m
+ [m
+ class RegisterController extends Controller[m
+ {[m
+[36m@@ -53,6 +55,10 @@[m [mclass RegisterController extends Controller[m
+             'password' => 'required|min:6|confirmed',[m
+         ]);[m
+     }[m
+[32m+[m[41m    [m
+[32m+[m[32m    public function index(){[m[41m    	[m
+[32m+[m[41m    [m	[32m return view('auth.Registro');[m
+[32m+[m[32m    }[m
+ [m
+     /**[m
+      * Create a new user instance after a valid registration.[m
+[36m@@ -62,10 +68,40 @@[m [mclass RegisterController extends Controller[m
+      */[m
+     protected function create(array $data)[m
+     {[m
+[31m-        return User::create([[m
+[31m-            'name' => $data['name'],[m
+[31m-            'email' => $data['email'],[m
+[31m-            'password' => bcrypt($data['password']),[m
+[31m-        ]);[m
+[32m+[m[41m    [m	[32m$relacion;[m
+[32m+[m[41m    	[m
+[32m+[m[41m    [m	[32mif (array_key_exists('razonSocial', $data)){[m
+[32m+[m[41m    [m			[32m$relacion = Empresa::create([[m
+[32m+[m[41m    [m							[32m'razonSocial' => $data['razonSocial'],[m
+[32m+[m[41m    [m							[32m'telefono' => $data['telefono'],[m
+[32m+[m[41m    [m							[32m'telefono2' => $data['telefono2'],[m
+[32m+[m[41m    [m							[32m'direccion' => $data['direccion'],[m
+[32m+[m[41m    [m							[32m'localidad' => $data['localidad'][m
+[32m+[m[41m    [m						[32m]);[m
+[32m+[m[41m    [m	[32m}else{[m
+[32m+[m[41m    [m		[32m$relacion=Persona::create([[m
+[32m+[m	[41m    [m				[32m'nombre' => $data['nombre'],[m
+[32m+[m	[41m    [m				[32m'apellido' => $data['apellido'],[m
+[32m+[m	[41m    [m				[32m'telefono' => $data['telefono'][m
+[32m+[m	[41m    [m		[32m]);[m
+[32m+[m	[41m    [m	[32m}[m
+[32m+[m[41m	    [m
+[32m+[m	[32m    $usuario = new User([[m
+[32m+[m[41m       [m				[32m'name' => $data['name'],[m
+[32m+[m[41m            [m		[32m'email' => $data['email'],[m
+[32m+[m[41m            [m		[32m'password' => bcrypt($data['password']),[m
+[32m+[m[41m        [m			[32m]);[m
+[32m+[m[32m// 	    El User::create() genera el usuario y lo persiste en la BD[m
+[32m+[m[32m// 	    $usuario = User::create([[m
+[32m+[m[32m//        				'name' => $data['name'],[m
+[32m+[m[32m//             		'email' => $data['email'],[m
+[32m+[m[32m//             		'password' => bcrypt($data['password']),[m
+[32m+[m[32m//         			]);[m
+[32m+[m[41m		[m
+[32m+[m	[32m    //guardo el usuario junto con la relacion[m
+[32m+[m	[32m    $usuario->userable()->associate($relacion);[m
+[32m+[m	[32m    $usuario->save();[m
+[32m+[m[32m        return $usuario;[m
+     }[m
+[32m+[m[41m    [m
+ }[m
+[1mdiff --git a/app/Http/Controllers/NoticiasController.php b/app/Http/Controllers/NoticiasController.php[m
+[1mindex f30e12b..64cbc64 100644[m
+[1m--- a/app/Http/Controllers/NoticiasController.php[m
+[1m+++ b/app/Http/Controllers/NoticiasController.php[m
+[36m@@ -17,8 +17,6 @@[m [mclass NoticiasController extends Controller[m
+ 	public function show($idNoticia){[m
+ 		$noticia = Noticia::find($idNoticia);[m
+ 		return view('noticia.viewNoticia', ['noticia'=>$noticia]);[m
+[31m-	}[m
+[31m-	[m
+[31m-	[m
+[32m+[m	[32m}[m[41m	[m
+ 	[m
+ }[m
+[1mdiff --git a/app/Http/Controllers/OfertasController.php b/app/Http/Controllers/OfertasController.php[m
+[1mindex ef845e2..30077e9 100755[m
+[1m--- a/app/Http/Controllers/OfertasController.php[m
+[1m+++ b/app/Http/Controllers/OfertasController.php[m
+[36m@@ -12,7 +12,7 @@[m [muse Illuminate\Support\Facades\Storage;[m
+ class OfertasController extends Controller[m
+ {[m
+ public function index(){[m
+[31m-	$trabajos = OfertaLaboral::simplepaginate(3);[m
+[32m+[m	[32m$trabajos = OfertaLaboral::orderBy('fechaAlta','desc')->simplepaginate(3);[m
+ 	return view('oferta.viewTrabajos', ['trabajos'=>$trabajos]);	[m
+ }[m
+ [m
+[1mdiff --git a/database/migrations/2017_05_12_010948_videos.php b/database/migrations/2017_05_12_010948_videos.php[m
+[1mindex c6e8082..5dbcb41 100644[m
+[1m--- a/database/migrations/2017_05_12_010948_videos.php[m
+[1m+++ b/database/migrations/2017_05_12_010948_videos.php[m
+[36m@@ -13,8 +13,8 @@[m [mclass Videos extends Migration[m
+      */[m
+     public function up()[m
+     {[m
+[31m-        Schema::create(function(Blueprint $table){[m
+[31m-        	$table->increments('idVideo');[m
+[32m+[m[32m        Schema::create('videos',function(Blueprint $table){[m
+[32m+[m[41m        [m	[32m$table->increments('id');[m
+         	[m
+         	$table->string('nombre');[m
+         	$table->string('url');[m
+[36m@@ -30,6 +30,6 @@[m [mclass Videos extends Migration[m
+      */[m
+     public function down()[m
+     {[m
+[31m-        //[m
+[32m+[m[32m        Schema::dropIfExist('videos');[m
+     }[m
+ }[m
+[1mdiff --git a/database/migrations/2017_05_22_183250_create_personas_table.php b/database/migrations/2017_05_22_183250_create_personas_table.php[m
+[1mindex d4e9203..e1776e0 100644[m
+[1m--- a/database/migrations/2017_05_22_183250_create_personas_table.php[m
+[1m+++ b/database/migrations/2017_05_22_183250_create_personas_table.php[m
+[36m@@ -15,6 +15,10 @@[m [mclass CreatePersonasTable extends Migration[m
+     {[m
+         Schema::create('personas', function (Blueprint $table) {[m
+             $table->increments('id');[m
+[32m+[m[32m            $table->string('nombre');[m
+[32m+[m[32m            $table->string('apellido');[m
+[32m+[m[32m            $table->string('telefono');[m
+[32m+[m[41m            [m
+             $table->timestamps();[m
+         });[m
+     }[m
+[1mdiff --git a/database/migrations/2017_05_22_183322_create_empresas_table.php b/database/migrations/2017_05_22_183322_create_empresas_table.php[m
+[1mindex 20f6230..c7e08c5 100644[m
+[1m--- a/database/migrations/2017_05_22_183322_create_empresas_table.php[m
+[1m+++ b/database/migrations/2017_05_22_183322_create_empresas_table.php[m
+[36m@@ -16,10 +16,11 @@[m [mclass CreateEmpresasTable extends Migration[m
+         Schema::create('empresas', function (Blueprint $table) {[m
+             $table->increments('id');[m
+             $table->string('razonSocial', 50);[m
+[31m-            $table->string('telefono', 20);[m
+[31m-            $table->string('telefono2', 20);[m
+[32m+[m[32m            $table->string('telefono', 25);[m
+[32m+[m[32m            $table->string('telefono2', 25);[m
+             $table->string('direccion', 200);[m
+[31m-            $table->string('localidad', 20);[m
+[32m+[m[32m            $table->string('localidad', 25);[m
+[32m+[m[41m            [m
+             $table->timestamps();[m
+         });[m
+     }[m
+[1mdiff --git a/database/migrations/2017_05_23_022947_userMod.php b/database/migrations/2017_05_23_022947_userMod.php[m
+[1mindex 0b5e672..13da0b0 100644[m
+[1m--- a/database/migrations/2017_05_23_022947_userMod.php[m
+[1m+++ b/database/migrations/2017_05_23_022947_userMod.php[m
+[36m@@ -14,8 +14,9 @@[m [mclass UserMod extends Migration[m
+     public function up()[m
+     {[m
+         Schema::table('users', function (Blueprint $table){[m
+[31m-        	$table->integer('userable_id');[m
+[31m-        	$table->string('userable_type');[m
+[32m+[m[41m        [m	[32m$table->morphs('userable');[m
+[32m+[m[32m//         	$table->integer('userable_id');[m
+[32m+[m[32m//         	$table->string('userable_type');[m
+         });[m
+     }[m
+ [m
+[1mdiff --git a/resources/views/auth/register.blade.php b/resources/views/auth/register.blade.php[m
+[1mindex 3e97b70..9342562 100755[m
+[1m--- a/resources/views/auth/register.blade.php[m
+[1m+++ b/resources/views/auth/register.blade.php[m
+[36m@@ -11,7 +11,7 @@[m
+                         {{ csrf_field() }}[m
+ [m
+                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">[m
+[31m-                            <label for="name" class="col-md-4 control-label">Nombre</label>[m
+[32m+[m[32m                            <label for="name" class="col-md-4 control-label etiquetaNegra">Nombre Usuario</label>[m
+ [m
+                             <div class="col-md-6">[m
+                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>[m
+[36m@@ -25,7 +25,7 @@[m
+                         </div>[m
+ [m
+                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">[m
+[31m-                            <label for="email" class="col-md-4 control-label">E-Mail</label>[m
+[32m+[m[32m                            <label for="email" class="col-md-4 control-label etiquetaNegra">E-Mail</label>[m
+ [m
+                             <div class="col-md-6">[m
+                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>[m
+[36m@@ -39,7 +39,7 @@[m
+                         </div>[m
+ [m
+                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">[m
+[31m-                            <label for="password" class="col-md-4 control-label">Contraseña</label>[m
+[32m+[m[32m                            <label for="password" class="col-md-4 control-label etiquetaNegra">Contraseña</label>[m
+ [m
+                             <div class="col-md-6">[m
+                                 <input id="password" type="password" class="form-control" name="password" required>[m
+[36m@@ -53,7 +53,7 @@[m
+                         </div>[m
+ [m
+                         <div class="form-group">[m
+[31m-                            <label for="password-confirm" class="col-md-4 control-label">Confirme la Contraseña</label>[m
+[32m+[m[32m                            <label for="password-confirm" class="col-md-4 control-label etiquetaNegra">Confirme la Contraseña</label>[m
+ [m
+                             <div class="col-md-6">[m
+                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>[m
+[36m@@ -74,3 +74,4 @@[m
+     </div>[m
+ </div>[m
+ @endsection[m
+[41m+[m
+[1mdiff --git a/resources/views/header/menu.blade.php b/resources/views/header/menu.blade.php[m
+[1mindex 2d69f70..cc5d733 100755[m
+[1m--- a/resources/views/header/menu.blade.php[m
+[1m+++ b/resources/views/header/menu.blade.php[m
+[36m@@ -27,6 +27,7 @@[m
+ 						</li>[m
+ 						<li><a href="{{ url('info') }}">Información</a></li>[m
+ 						<li><a href="{{ url('registro') }}">Registro</a></li>[m
+[32m+[m						[32m<li><a href="{{ url('borrarSesion') }}">LogOut</a></li>[m
+ 					</ul>[m
+ 				</div>[m
+ 			</nav>[m
+[1mdiff --git a/resources/views/linicial.blade.php b/resources/views/linicial.blade.php[m
+[1mdeleted file mode 100755[m
+[1mindex b3d9bbc..0000000[m
+[1m--- a/resources/views/linicial.blade.php[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-<?php[m
+[1mdiff --git a/resources/views/noticia/viewNoticias.blade.php b/resources/views/noticia/viewNoticias.blade.php[m
+[1mindex 63f2d52..12107a9 100644[m
+[1m--- a/resources/views/noticia/viewNoticias.blade.php[m
+[1m+++ b/resources/views/noticia/viewNoticias.blade.php[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-start@extends('layouts.app')[m
+[32m+[m[32m@extends('layouts.app')[m
+ [m
+ @section('content')[m
+ <div class="container">[m
+[1mdiff --git a/resources/views/registro.blade.php b/resources/views/registro.blade.php[m
+[1mdeleted file mode 100755[m
+[1mindex b7f856a..0000000[m
+[1m--- a/resources/views/registro.blade.php[m
+[1m+++ /dev/null[m
+[36m@@ -1,79 +0,0 @@[m
+[31m-@extends('layouts.app')[m
+[31m-[m
+[31m-		<script type="text/javascript">[m
+[31m-[m
+[31m-		function mostrar(id) {[m
+[31m-			if (id == "nada") {[m
+[31m-				$("#nada").show();[m
+[31m-		        $("#persona").hide();[m
+[31m-		        $("#empresa").hide();[m
+[31m-		    }[m
+[31m-[m
+[31m-		    if (id == "persona") {[m
+[31m-		    	$("#nada").hide();[m
+[31m-		        $("#persona").show();[m
+[31m-		        $("#empresa").hide();[m
+[31m-		    }[m
+[31m-[m
+[31m-		    if (id == "empresa") {[m
+[31m-		    	$("#nada").hide();[m
+[31m-		        $("#persona").hide();[m
+[31m-		        $("#empresa").show();[m
+[31m-		    }[m
+[31m-		}[m
+[31m-		</script>[m
+[31m-[m
+[31m-@section('content')[m
+[31m-[m
+[31m-<!--REGISTRO-->[m
+[31m-		<div class="container">[m
+[31m-			<h1>REGISTRARSE</h1>[m
+[31m-			<div class="row">[m
+[31m-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">[m
+[31m-					<div class="form-group">[m
+[31m-						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">[m
+[31m-							<form action="index.php" method="post">[m
+[31m-					  		  <h2>Seleccione una opción:</h2> [m
+[31m-							    <select id="status" name="status" onChange="mostrar(this.value);" class="form-control" style="padding: 15px 12px; font-size: 15px;">[m
+[31m-	  								<option value="nada" selected>-</option>[m
+[31m-							        <option value="persona">Persona</option>[m
+[31m-							        <option value="empresa">Empresa</option>[m
+[31m-							     </select>[m
+[31m-							</form>[m
+[31m-						</div>[m
+[31m-						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">[m
+[31m-							<div id="nada">[m
+[31m-							</div>[m
+[31m-[m
+[31m-							<div id="persona" style="display: none;">[m
+[31m-							   	<h2>Persona</h2>[m
+[31m-							   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">[m
+[31m-								   	<label style="color:black;">Nombre:</label>[m
+[31m-								   	<input type="text" placeholder="Nombre" name="nombre" class="form-control" style="font-size:15px; height:35px" ">[m
+[31m-							   	</div>[m
+[31m-							   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">[m
+[31m-								   	<label style="color:black;">Apellido</label>[m
+[31m-								   	<input type="text" placeholder="Apellido" name="apellido" class="form-control" style="font-size:15px; height:35px" ">[m
+[31m-								</div>[m
+[31m-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">[m
+[31m-								   	<label style="color:black;">Mail</label>[m
+[31m-								   	<input type="text" placeholder="Mail" name="mail" class="form-control control-label" style="font-size:15px; height:35px" ">[m
+[31m-								</div>[m
+[31m-								<div class="col-xs-12 col-sm-6  col-md-offset-9 col-md-3 col-lg-offset-9 col-lg-3">[m
+[31m-									<input class="form-control btn-sm boton" type="submit" value="Registrarme" name="registrar" id="registrar">[m
+[31m-								</div>[m
+[31m-							</div>[m
+[31m-									[m
+[31m-							<div id="empresa" style="display: none;">[m
+[31m-								<h2>Empresa</h2>[m
+[31m-							   	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">[m
+[31m-								   	<label style="color:black;">Nombre de la empresa:</label>[m
+[31m-								   	<input type="text" placeholder="Nombre de la empresa" name="nombreempresa" class="form-control" style="font-size:15px; height:35px" ">[m
+[31m-							   	</div>[m
+[31m-							</div>[m
+[31m-						</div>[m
+[31m-					</div>[m
+[31m-				</div>[m
+[31m-			</div>[m
+[31m-		</div>[m
+[31m-@endsection[m
+[1mdiff --git a/routes/web.php b/routes/web.php[m
+[1mindex 7593871..e5a61c2 100755[m
+[1m--- a/routes/web.php[m
+[1m+++ b/routes/web.php[m
+[36m@@ -4,6 +4,8 @@[m
+ use Illuminate\Support\Facades\Route;[m
+ use App\OfertaLaboral;[m
+ use App\Http\Controllers\OfertasController;[m
+[32m+[m[32muse App\Http\Controllers\Auth\RegisterController;[m
+[32m+[m
+ [m
+ /*[m
+ |--------------------------------------------------------------------------[m
+[36m@@ -17,6 +19,22 @@[m [muse App\Http\Controllers\OfertasController;[m
+ */[m
+ Auth::routes();[m
+ [m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas de Prueba[m
+[32m+[m[32m */[m
+[32m+[m
+[32m+[m[32mRoute::get('/borrarSesion', function (){[m
+[32m+[m[41m	[m
+[32m+[m[32m// 	Session::flush();[m
+[32m+[m	[32m$request->session()->flush();[m
+[32m+[m[32m// 	Session::start();[m
+[32m+[m	[32mreturn view('welcome');[m
+[32m+[m[32m});[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas Institucionales[m
+[32m+[m[32m */[m
+[32m+[m
+ Route::get('/', function () {[m
+     return view('welcome');[m
+ });[m
+[36m@@ -32,14 +50,19 @@[m [mRoute::get('/contacto', function (){[m
+ 	return view('contacto');[m
+ });[m
+ [m
+[31m-Route::get('/registro', function (){[m
+[31m-	return view('registro');[m
+[31m-});[m
+[31m-[m
+ Route::get('/home', function(){[m
+ 	return view('home');[m
+ });[m
+ [m
+[32m+[m[32m//TODO: hacer controlador hacer[m
+[32m+[m[32mRoute::get('/info', function (){[m
+[32m+[m	[32mreturn view('info');[m
+[32m+[m[32m});[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas de Minas y Galerias[m
+[32m+[m[32m */[m
+[32m+[m
+ Route::get('minaAguilar', function () {[m
+ 	return view('viewGaleria', ['title' => 'Mina Aguilar',[m
+ 							 'columnas' => 4,[m
+[36m@@ -131,6 +154,10 @@[m [mRoute::get('varias', function () {[m
+ 	]);[m
+ });[m
+ [m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas Multimediales[m
+[32m+[m[32m */[m
+[32m+[m[32m//TODO: guardar registros del array en base de datos[m
+ Route::get('fotos', function(){[m
+ 	$data = array([m
+ 				['titulo'=> 'Retro Escabadoras','imagen'=>'img/retro/0.jpg', 'enlace'=>url('/retro')],[m
+[36m@@ -155,7 +182,7 @@[m [mRoute::get('fotos', function(){[m
+ 	]);[m
+ });[m
+ [m
+[31m-[m
+[32m+[m[32m//TODO: guardar registros del array en base de datos[m
+ Route::get('videos', function(){[m
+ 	$data = array([m
+ 			['nombre'=>'Zonas de perforación', 'url'=>'https://www.youtube.com/embed/P2mMfVn_66E'],[m
+[36m@@ -193,19 +220,37 @@[m [mRoute::get('videos', function(){[m
+ 	return view('viewVideos', ['titulo'=>'Videos', 'columnas'=>3,'videos'=>$data]);[m
+ });[m
+ [m
+[31m-Route::get('/noticias', 'NoticiasController@index');[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas de Noticias[m
+[32m+[m[32m */[m
+ [m
+[32m+[m[32mRoute::get('/noticias', 'NoticiasController@index');[m
+ [m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas de Ofertas Laborales[m
+[32m+[m[32m */[m
+ Route::resource('ofertaLaboral', 'OfertasController');[m
+ [m
+[31m-Route::get("ofertaLaboral/create", 'OfertasController@create');[m
+[32m+[m[32mRoute::get("ofertaLaboral/create", 'OfertasController@create')->middleware('auth.basic');[m
+ [m
+ Route::get('ofertaLaboral/{idOferta}', 'OfertasController@show');[m
+ [m
+[31m-Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit');[m
+[32m+[m[32mRoute::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit')->middleware('auth.basic');[m
+[32m+[m
+[32m+[m[32mRoute::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete')->middleware('auth.basic');[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Rutas de Regristro de Usuarios (Empresas y Personas)[m
+[32m+[m[32m */[m
+[32m+[m
+[32m+[m
+[32m+[m[32m// Route::get('/registro', function (){[m
+[32m+[m[32m// 	return view('auth.Registro');[m
+[32m+[m[32m// });[m
+ [m
+[31m-Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete');[m
+[32m+[m[32mRoute::resource('registro', 'Auth\RegisterController');[m
+ [m
+[32m+[m[32m// Route::get('/registro', 'Auth\RegisterController@index');[m
+ [m
+ [m
+ [m

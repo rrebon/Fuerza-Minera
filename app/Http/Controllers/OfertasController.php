@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class OfertasController extends Controller
 {
 public function index(){
-	$trabajos = OfertaLaboral::simplepaginate(3);
+	$trabajos = OfertaLaboral::orderBy('fechaAlta','desc')->simplepaginate(3);
 	return view('oferta.viewTrabajos', ['trabajos'=>$trabajos]);	
 }
 
