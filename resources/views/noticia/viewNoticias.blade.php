@@ -9,11 +9,11 @@
 			
 			@forelse($noticias as $noticia)
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 thumbnail">
-					<img src="img/somos1.jpg" alt="">
+					<img src="{{ url(Storage::url($noticia->urlImagenIntro)) }}" alt="">
 					<div class="caption">
 						<h3>{{ $noticia->titulo }} <small> {{ $noticia->fechaAlta }} </small></h3>
 						<h4 class="hidden-xs">{{ $noticia->intro }}</h4>
-						<a href="articulo.html" style="text-decoration:none">Leer más</a>
+						<a href= "{{ url('noticia/'.$noticia->idNoticia) }}" style="text-decoration:none">Leer más</a>
 					</div>
 				</div>
 			@empty

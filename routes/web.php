@@ -1,10 +1,12 @@
 <?php
 
-//use Illuminate\Routing\Route;
+// use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 use App\OfertaLaboral;
 use App\Http\Controllers\OfertasController;
+use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\Auth\RegisterController;
+use Doctrine\DBAL\Schema\Index;
 
 
 /*
@@ -214,7 +216,8 @@ Route::get('videos', function(){
 			['nombre'=>'Sublevel Caving Mining Method', 'url'=>'https://www.youtube.com/embed/TnA2mZ9N74s'],
 			['nombre'=>'Tambor aglomerador', 'url'=>'https://www.youtube.com/embed/PsWtYxIbnaM'],
 			['nombre'=>'Grasberg Mine', 'url'=>'https://www.youtube.com/embed/l0EWgO0lCek'],
-			['nombre'=>'BHP Billiton', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns']			
+			['nombre'=>'BHP Billiton', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns'],
+			['nombre'=>'video prueba', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns']
 	);
 	
 	return view('viewVideos', ['titulo'=>'Videos', 'columnas'=>3,'videos'=>$data]);
@@ -224,7 +227,15 @@ Route::get('videos', function(){
  * Rutas de Noticias
  */
 
-Route::get('/noticias', 'NoticiasController@index');
+Route::resource('noticia', 'NoticiasController'); 
+
+// Route::get('noticias/create', 'NoticiasController@create');
+
+// Route::get('noticia/{idNoticia}', 'NoticiasController@show');
+
+// Route::put('noticia/{idNoticia}/edit', 'NoticiasController@edit');
+
+// Route::delete('noticia/{idNoticia}', 'NoticiasController@delete');
 
 /*
  * Rutas de Ofertas Laborales
@@ -239,18 +250,15 @@ Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit')->middlewar
 
 Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete')->middleware('auth.basic');
 
+Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownload');
+
 /*
  * Rutas de Regristro de Usuarios (Empresas y Personas)
  */
 
-
-// Route::get('/registro', function (){
-// 	return view('auth.Registro');
-// });
-
 Route::resource('registro', 'Auth\RegisterController');
 
-// Route::get('/registro', 'Auth\RegisterController@index');
+
 
 
 

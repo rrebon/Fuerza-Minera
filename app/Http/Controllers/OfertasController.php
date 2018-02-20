@@ -8,6 +8,7 @@ use App\Http\Requests\OfertaLaboralRequest as OfertaLaboralRequest;
 use App\OfertaLaboral as OfertaLaboral;
 use App\User as User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response as Response;
 
 class OfertasController extends Controller
 {
@@ -35,12 +36,13 @@ public function create()
 public function store(OfertaLaboralRequest $request)
 {
 	$disk = Storage::disk();
-	$archivo = $request->file('urlArchivo');
+	
 	$path = "";
-	if($archivo)
-		$path = $archivo->store('public/ofertasLaborales');
+	
+	$path = $request->urlArchivo->store('public/ofertasLaborales');
 	
 	$input = $request->all();
+	//hago la conversion de la fecha con el formato correspondiente
 	$input['fechaAlta'] = date_create_from_format("d/m/Y", $input['fechaAlta']); 
 	
 	$input['idUsuarioCreacion'] = \Auth::user()->id;
@@ -61,7 +63,7 @@ public function show($idOferta){
  * @param  int  $id
  * @return \Illuminate\Http\Response
  */
-public function edit($id)
+public function edit($idOferta)
 {
 	$oferta = OfertaLaboral::findOrFail($id);
 
@@ -83,6 +85,23 @@ public function update(Request $request, $id)
 	$oferta->update($input);
 
 	return redirect('ofertaLaboral');
+}
+
+public function getDownload($idOferta)
+{
+	$oferta = OfertaLaboral::findOrFail($idOferta);
+	
+	$file = Storage::disk()->get($oferta->urlArchivo);
+	
+	$mimeType = \Storage::mimeType($oferta->urlArchivo);	
+	
+	$headers = array(
+			'Content-Type: '.$mimeType,
+	);
+	
+	$nombreArchivo = "OfertaLaboral-".$oferta->id.".pdf";	
+	
+	return response()->download(storage_path('app/'.$oferta->urlArchivo),$nombreArchivo, $headers);
 }
 
 

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Noticia extends Model
 {
 	protected $table = 'Noticias';
+	protected $primaryKey = 'idNoticia';
 	
-    const CREATED_AT = 'fechaCreacion';
-    const UPDATED_AT = 'fechaModificacion';
+//ya las cree sin renombrar estos campos	
+//     const CREATED_AT = 'fechaCreacion';
+//     const UPDATED_AT = 'fechaModificacion';
     
     protected $fillable = array('titulo',
     							'intro',

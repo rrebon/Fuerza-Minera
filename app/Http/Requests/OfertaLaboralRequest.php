@@ -29,7 +29,20 @@ class OfertaLaboralRequest extends FormRequest
         		'texto' => 'required|min:50|max:500',
         		'intro' => 'required|min:15|max:60',
         		'fechaAlta' => 'required|date_format:"d/m/Y"',
-        		'urlArchivo' => 'file',
+        		'urlArchivo' => 'file|max:5120',
         ];
+    }
+    
+    public function withValidator($validator)
+    {
+    	$validator->after(function ($validator) {
+    		if($this->hasFile('urlArchivo')){
+    			if(!$this->file('urlArchivo')->isValid()){
+    				$validator->errors()->add('urlArchivo', "No se guardó correctamente el archivo." );
+    			}
+    		}else{
+    			$validator->errors()->add('urlArchivo', "No ingresó archivo." );
+    		}
+    	});
     }
 }

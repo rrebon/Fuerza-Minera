@@ -17,7 +17,7 @@
 						<li><a href="{{ url('quienesSomos') }}">¿Quiénes somos?</a></li>
 						<li><a href="{{ url('contacto') }}">Contactos</a></li>
 						<li><a href="{{ url('ofertaLaboral') }}">Trabajo</a></li>
-						<li><a href="{{ url('noticias') }}">Noticias</a></li>						
+						<li><a href="{{ url('noticia') }}">Noticias</a></li>						
 						<li class="dropdown">
 							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">Media <span class="caret"></span></a>
 							<ul class="dropdown-menu">

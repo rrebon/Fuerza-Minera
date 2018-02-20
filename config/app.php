@@ -186,6 +186,12 @@ return [
     	 * Collective HTMLServiceProvider
     	 */
     	Collective\Html\HtmlServiceProvider::class,
+    	/*
+    	 * elfinder tinymce integracion
+    	 */    	
+    	Barryvdh\Elfinder\ElfinderServiceProvider::class,
+    		
+    		
     ],
 
     /*

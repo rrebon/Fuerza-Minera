@@ -16,7 +16,14 @@ class FrameHeaderMiddleware
     public function handle($request, Closure $next)
     {
     	$response = $next($request);
-    	$response->header('X-Frame-Options', 'ALLOW FROM https://www.youtube.com');
+    	
+    	//verifico si es instancia de BinaryFileResponse porque esta clase no tiene
+    	//metodo header() y se utiliza en la descarga de archivos con el metodo download()
+    	if(!is_a($response, 'Symfony\Component\HttpFoundation\BinaryFileResponse')){
+    		//este header lo agregue para poder embeber los video de youtube
+    		$response->header('X-Frame-Options', 'ALLOW FROM https://www.youtube.com');
+    	}
+
         return $response;
     }
 }
