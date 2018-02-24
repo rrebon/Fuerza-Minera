@@ -258,6 +258,14 @@ Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownloa
 
 Route::resource('registro', 'Auth\RegisterController');
 
+/**
+ * Rutas de Informacion
+ */
+
+Route::resource('informacion', 'InformacionController');
+
+Route::get('informacion/getDownload', 'infromacionController@getDownload');
+
 
 
 

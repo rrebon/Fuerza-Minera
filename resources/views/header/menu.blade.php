@@ -25,7 +25,7 @@
 								<li><a href="{{ url('videos') }}">Videos</a></li>
 							</ul>
 						</li>
-						<li><a href="{{ url('info') }}">Información</a></li>
+						<li><a href="{{ url('informacion') }}">Información</a></li>
 						<li><a href="{{ url('registro') }}">Registro</a></li>
 						<li><a href="{{ url('borrarSesion') }}">LogOut</a></li>
 					</ul>
