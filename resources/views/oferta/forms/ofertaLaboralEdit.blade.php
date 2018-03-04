@@ -6,9 +6,8 @@
 <h1>Editar Oferta Laboral</h1>
 
 <hr>
-{!! Form::model($ofertaLaboral, array('route' => ['OfertaLaboralController@update', $ofertaLaboral->idOferta], 'class'=>'form-horizontal')) !!}
-{!! Form::model($oferta, ['method' => 'PATCH', 'action' => ['OfertaController@update',$oferta->id]]) !!}
-	@include('forms.formOfertaLaboral', ['submitButtonText' => 'Editar Oferta'])
+{!! Form::model($ofertaLaboral, array('route' => ['ofertaLaboral.edit', $ofertaLaboral->idOferta],'method' => 'PATCH', 'class'=>'form-horizontal')) !!}
+	@include('oferta.forms.ofertaLaboralEdit', ['submitButtonText' => 'Editar Oferta'])
 {!! Form::close() !!}
 
 </div>

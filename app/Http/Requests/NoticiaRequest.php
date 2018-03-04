@@ -35,7 +35,7 @@ class Noticiarequest extends FormRequest{
 	public function withValidator($validator)
 	{		
 		$validator->after(function ($validator) {
-			if($this->hasFile('urlImagenIntro')){
+			if($this->hasFile('urlImagenIntro')){		
 				if(!$this->file('urlImagenIntro')->isValid()){
 					$validator->errors()->add('urlImagenIntro', "No se guardó correctamente el archivo de imagen intro." );
 				}

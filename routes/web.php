@@ -28,7 +28,7 @@ Auth::routes();
 Route::get('/borrarSesion', function (){
 	
 // 	Session::flush();
-	$request->session()->flush();
+//	$request->session()->flush();
 // 	Session::start();
 	return view('welcome');
 });
@@ -248,6 +248,8 @@ Route::get('ofertaLaboral/{idOferta}', 'OfertasController@show');
 
 Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit')->middleware('auth.basic');
 
+Route::patch('ofertaLaboral/{idOferta}', 'OfertasController@update');
+
 Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete')->middleware('auth.basic');
 
 Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownload');
@@ -256,7 +258,9 @@ Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownloa
  * Rutas de Regristro de Usuarios (Empresas y Personas)
  */
 
-Route::resource('registro', 'Auth\RegisterController');
+//Route::resource('registro', 'Auth\RegisterController');
+Route::get('registro', 'Auth\RegisterController@index');
+
 
 /**
  * Rutas de Informacion
@@ -264,7 +268,7 @@ Route::resource('registro', 'Auth\RegisterController');
 
 Route::resource('informacion', 'InformacionController');
 
-Route::get('informacion/getDownload', 'infromacionController@getDownload');
+Route::get('informacion/getDownload', 'informacionController@getDownload');
 
 
 

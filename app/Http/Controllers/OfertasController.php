@@ -65,9 +65,9 @@ public function show($idOferta){
  */
 public function edit($idOferta)
 {
-	$oferta = OfertaLaboral::findOrFail($id);
+	$ofertaLaboral = OfertaLaboral::findOrFail($idOferta);
 
-	return view('oferta.forms.ofertaLaboralEdit', compact('oferta'));
+	return view('oferta.forms.ofertaLaboralEdit', compact('ofertaLaboral'));
 }
 
 /**
@@ -77,9 +77,9 @@ public function edit($idOferta)
  * @param  int  $id
  * @return \Illuminate\Http\Response
  */
-public function update(Request $request, $id)
+public function update($id, OfertaLaboralRequest $request)
 {
-	$oferta = OfertaLaboral::findOrFail($id);	
+	$oferta = OfertaLaboral::findOrFail($id);
 	$input = $request->all();
 	var_dump($input);
 	$oferta->update($input);
