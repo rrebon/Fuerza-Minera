@@ -52,6 +52,11 @@ class NoticiasController extends Controller
 		return view('noticia.viewNoticia', ['noticia'=>$noticia]);
 	}
 	
+	public function edit ($idNoticia){
+		$noticia = Noticia::find($idNoticia);
+		return view('noticia.forms.formNoticia', ['noticia'=>$noticia]);
+	}
+	
 	
 // 	private function almacenarArchivo(File $archivo){
 // 		return Storage::putFile('public/noticias', $archivo);

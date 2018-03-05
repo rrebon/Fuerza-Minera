@@ -233,7 +233,7 @@ Route::resource('noticia', 'NoticiasController');
 
 // Route::get('noticia/{idNoticia}', 'NoticiasController@show');
 
-// Route::put('noticia/{idNoticia}/edit', 'NoticiasController@edit');
+Route::put('noticia/{idNoticia}/edit', 'NoticiasController@edit');
 
 // Route::delete('noticia/{idNoticia}', 'NoticiasController@delete');
 
