@@ -65,8 +65,7 @@ public function show($idOferta){
  */
 public function edit($idOferta)
 {
-	$ofertaLaboral = OfertaLaboral::findOrFail($idOferta);
-
+	$ofertaLaboral= OfertaLaboral::findOrFail($idOferta);
 	return view('oferta.forms.ofertaLaboralEdit', compact('ofertaLaboral'));
 }
 
