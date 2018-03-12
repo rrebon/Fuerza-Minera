@@ -14,7 +14,7 @@
 					{!! Form::label('titulo','Título', array('class'=> 'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-5">
-					{!! Form::text('titulo','', array('class'=>'form-control input-sm')) !!}
+					{!! Form::text('titulo',isset($noticia)?$noticia->titulo:'', array('class'=>'form-control input-sm')) !!}
 				</div>
 				<div class="col-sm-1 hidden">
 					{!! Form::label('fechaAlta','Fecha Publicación', array('class'=> 'etiquetaNegra')) !!}
@@ -28,7 +28,7 @@
 					{!! Form::label('intro','Introducción', array('class'=> 'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-10">
-					{!! Form::text('intro','', array('class'=>'form-control input-sm')) !!}
+					{!! Form::text('intro',isset($noticia)?$noticia->introduccion:'', array('class'=>'form-control input-sm')) !!}
 				</div>
 			</div>
 			<div class='row form-group'>
@@ -36,7 +36,7 @@
 					{!! Form::label('texto', 'Texto', array('class'=>'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-10">
-					{!! Form::textarea('texto','', array('class'=>'form-control editor')) !!}
+					{!! Form::textarea('texto',isset($noticia)?$noticia->texto:'', array('class'=>'form-control editor')) !!}
 				</div>				
 			</div>	
 			<div class="row">

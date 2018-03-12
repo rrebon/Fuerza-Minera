@@ -22,6 +22,10 @@
 					<a href="https://www.facebook.com/fuerza.minera/?fref=ts"><img
 						src="{{ asset('img/icoFace.png') }}" alt="" class="img-responsive"></a>
 				</div>
+				<div class="icono col-xs-4 col-sm-4 col-md-4 col-lg-3">
+					<a href="https://www.instagram.com/fuerza_minera/"><img
+						src="{{ asset('img/logoinsta.png') }}" alt="" class="img-responsive" width="50" height="50"></a>
+				</div>
 			</div>
 			<div
 				class="icono hidden-xs col-sm-4 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1"

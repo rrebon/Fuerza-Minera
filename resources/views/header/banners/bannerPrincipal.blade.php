@@ -8,7 +8,7 @@
 		class="visible-xs"></div>
 </div>
 <div class="logo container">
-	<a href="index.html"><img src="{{ url('img/logo.jpg') }}" alt=""
+	<a href="{{ url('/welcome') }}"><img src="{{ url('img/logo.jpg') }}" alt=""
 		class="img-responsive hidden-xs"></a> <a href="index.html"><img
 		src="{{ url('img/logoResp.jpg') }}" alt="" class="img-responsive visible-xs"></a>
 </div>

@@ -24,28 +24,33 @@
 		</div>
 
 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			<div class="checkbox">
-				<label for='remember'>
-					<p style="font-size: 15px; color: #F0D431">Recordarme</p>
-				</label> 
-				<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> 
+		<?php $user=Auth::user(); ?>
+		@if(Auth::check())
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<label>{{ "Bienvenido, ".$user->name }}</label>
 			</div>
+		@endif
 		</div>
-
+		@if(Auth::check()==false)
 		<div class="col-xs-4  col-sm-4 col-md-4 col-md-offset-8 col-lg-4 col-lg-offset-6 hidden-xs">
+		
 			<input class="form-control btn-sm boton" type="submit"
 				value="Ingresar" name="ingresar" id="ingresar"> <a
-				href="registro.html" style="font-size: 15px; color: #F0D431">Registrarse</a>
+				href= "{{ url('/registro') }}" style="font-size: 15px; color: #F0D431">Registrarse</a>
 		</div>
+		@endif
 		<div class="row visible-xs">
 			<!--REGISTRO RESONSIVE-->
 			<div class="col-xs-6 col-sm-6 col-md-12 col-lg-6 col-lg-offset-6">
 				<input class="form-control btn-sm boton hidden-xs" type="submit" value="Ingresar" name="ingresar" id="ingresar"> 
-				<a href="ingreso.html" class="hidden-lg hidden-md hidden-sm btn btn-sm boton">Ingresar</a>					
+				<a href="{{ url('auth.registro') }}" class="hidden-lg hidden-md hidden-sm btn btn-sm boton">Ingresar</a>					
 			</div>
+			@if(Auth::check()==false)
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<a href="{{ url('auth.registro') }}" style="font-size: 15px; color: #F0D431">Registrarse</a>
 			</div>
-		</div>
+			@endif
+		</div>		
+
 	</form>
 </div>

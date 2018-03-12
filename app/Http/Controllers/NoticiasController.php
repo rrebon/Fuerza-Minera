@@ -54,7 +54,7 @@ class NoticiasController extends Controller
 	
 	public function edit ($idNoticia){
 		$noticia = Noticia::find($idNoticia);
-		return view('noticia.forms.formNoticia', ['noticia'=>$noticia]);
+		return view('noticia.forms.editNoticia', ['noticia'=>$noticia]);
 	}
 	
 	

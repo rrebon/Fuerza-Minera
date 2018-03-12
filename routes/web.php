@@ -30,6 +30,7 @@ Route::get('/borrarSesion', function (){
 // 	Session::flush();
 //	$request->session()->flush();
 // 	Session::start();
+	Auth::logout();
 	return view('welcome');
 });
 
