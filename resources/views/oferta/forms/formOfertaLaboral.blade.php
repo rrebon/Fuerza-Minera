@@ -45,7 +45,7 @@
 					{!! Form::label('urlArchivo', 'Archivo', array('class'=>'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-4">
-					{!! Form::file('archivo') !!}
+					{!! Form::file('urlArchivo') !!}
 					<?php $url=isset($oferta)?$oferta->urlArchivo:''; 
 							if ($url!='') {
 								$position=strpos($url,'/');

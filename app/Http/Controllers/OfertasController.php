@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 use App\Http\Requests\OfertaLaboralRequest as OfertaLaboralRequest;
 use App\OfertaLaboral as OfertaLaboral;
 use App\User as User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response as Response;
+use Illuminate\Http\Request;
 
 class OfertasController extends Controller
 {
@@ -37,11 +37,12 @@ public function store(OfertaLaboralRequest $request)
 {
 	$disk = Storage::disk();
 	
-	$path = "";
+	$path = "";	
+	var_dump($request->urlArchivo);
+	exit();
+	$path = $request->urlArchivo->store('public/ofertasLaborales');	
 	
-	$path = $request->urlArchivo->store('public/ofertasLaborales');
-	
-	$input = $request->all();
+	$input = $request->all();	
 	//hago la conversion de la fecha con el formato correspondiente
 	$input['fechaAlta'] = date_create_from_format("d/m/Y", $input['fechaAlta']); 
 	
@@ -66,6 +67,7 @@ public function show($idOferta){
 public function edit($idOferta)
 {
 	$ofertaLaboral= OfertaLaboral::findOrFail($idOferta);
+		
 	return view('oferta.forms.ofertaLaboralEdit', compact('ofertaLaboral'));
 }
 
@@ -76,31 +78,68 @@ public function edit($idOferta)
  * @param  int  $id
  * @return \Illuminate\Http\Response
  */
-public function update($id, OfertaLaboralRequest $request)
+public function update($idOferta, OfertaLaboralRequest $request)
 {
-	$oferta = OfertaLaboral::findOrFail($id);
+	$request = OfertaLaboralRequest::capture();
+	
+	$oferta = OfertaLaboral::findOrFail($idOferta);
+	
 	$input = $request->all();
-	var_dump($input);
-	$oferta->update($input);
+			
+	$disk = Storage::disk();
+		
+	$path = storage_path('app/'.$oferta->urlArchivo);
+	
+	$archivo = $request->urlArchivo;
 
+	//si el request tiene un archivo
+	//borro el que tiene y seteo el nuevo
+	if(isset($request->urlArchivo)){
+		if(file_exists($path)){
+			unlink($path);			
+		}	
+		$path = $request->urlArchivo->store('public/ofertasLaborales');
+	}		
+	//siempre asigno el path del archivo, ya sea el nuevo o el viejo
+	$input['urlArchivo'] = $path;		
+	
+	$input = $request->all();
+	//hago la conversion de la fecha con el formato correspondiente
+	$input['fechaAlta'] = date_create_from_format("d/m/Y", $input['fechaAlta']);
+		
+	$oferta->titulo = $input['titulo'];
+	$oferta->fechaAlta = $input['fechaAlta'];
+	$oferta->intro = $input['intro'];
+	$oferta->texto = $input['texto'];
+	$oferta->urlArchivo = $path;
+	
+	$oferta->save();
+	
 	return redirect('ofertaLaboral');
+	//$oferta->update($input);
+	
+	//return $this->show($idOferta);
 }
-
+//TODO: ver porque queda cacheada en una pagina la direccion de descarga idOferta=11
 public function getDownload($idOferta)
 {
 	$oferta = OfertaLaboral::findOrFail($idOferta);
 	
 	$file = Storage::disk()->get($oferta->urlArchivo);
 	
-	$mimeType = \Storage::mimeType($oferta->urlArchivo);	
+	$path = storage_path('app/'.$oferta->urlArchivo);
+	
+	$mimeType = \Storage::mimeType($oferta->urlArchivo);
+	
+	$ext = pathinfo($path, PATHINFO_EXTENSION);	
 	
 	$headers = array(
 			'Content-Type: '.$mimeType,
 	);
 	
-	$nombreArchivo = "OfertaLaboral-".$oferta->id.".pdf";	
+	$nombreArchivo = $oferta->titulo.".".$ext;
 	
-	return response()->download(storage_path('app/'.$oferta->urlArchivo),$nombreArchivo, $headers);
+	return response()->download($path,$nombreArchivo, $headers);
 }
 
 

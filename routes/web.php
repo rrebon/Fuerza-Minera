@@ -225,7 +225,7 @@ Route::get('videos', function(){
 });
 
 /*
- * Rutas de Noticias
+ * Rutas de Noticias 
  */
 
 Route::resource('noticia', 'NoticiasController'); 
@@ -243,15 +243,20 @@ Route::put('noticia/{idNoticia}/edit', 'NoticiasController@edit');
  */
 Route::resource('ofertaLaboral', 'OfertasController');
 
-Route::get("ofertaLaboral/create", 'OfertasController@create')->middleware('auth.basic');
+//probando para ubicar el metodo update (no funciona igualemente)
+Route::post('ofertaLaboral/{ofertaLaboral}/updatepost', ['as'=>'ofertaLaboral.updatepost', 'uses'=>'OfertasController@update']);
 
-Route::get('ofertaLaboral/{idOferta}', 'OfertasController@show');
+// Route::get('ofertaLaboral', 'OfertasController@index');
 
-Route::put('ofertaLaboral/{idOferta}/edit', 'OfertasController@edit')->middleware('auth.basic');
+// Route::get("ofertaLaboral/create", 'OfertasController@create')->middleware('auth.basic');
 
-Route::patch('ofertaLaboral/{idOferta}', 'OfertasController@update');
+// Route::get('ofertaLaboral/{idOferta}', 'OfertasController@show');
 
-Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete')->middleware('auth.basic');
+// Route::get('ofertaLaboral/{idOferta}/edit', ['as'=>'ofertaLaboral.edit', 'uses'=>'OfertasController@edit'])->middleware('auth.basic');
+
+// Route::put('ofertaLaboral/{idOferta}', 'OfertasController@update');
+
+// Route::delete('ofertaLaboral/{idOferta}', 'OfertasController@delete')->middleware('auth.basic');
 
 Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownload');
 

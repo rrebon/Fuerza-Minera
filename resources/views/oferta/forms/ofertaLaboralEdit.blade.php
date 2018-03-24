@@ -9,7 +9,12 @@
 </div>
 
 <hr>
-{!! Form::model($ofertaLaboral, array('route' => ['ofertaLaboral.edit', $ofertaLaboral->idOferta],'method' => 'PATCH', 'class'=>'form-horizontal')) !!}
+{!! Form::Model($ofertaLaboral, array('route' => ['ofertaLaboral.updatepost',
+												   $ofertaLaboral->idOferta],
+												   'method' => 'POST', 
+												   'class'=>'form-horizontal', 
+												   'role'=>'form', 
+												   'files'=>true)) !!}
 	@include('oferta.forms.formOfertaLaboral', ['submitButtonText' => 'Editar Oferta', 'oferta'=>$ofertaLaboral])
 {!! Form::close() !!}
 
