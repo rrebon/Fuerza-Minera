@@ -217,8 +217,7 @@ Route::get('videos', function(){
 			['nombre'=>'Sublevel Caving Mining Method', 'url'=>'https://www.youtube.com/embed/TnA2mZ9N74s'],
 			['nombre'=>'Tambor aglomerador', 'url'=>'https://www.youtube.com/embed/PsWtYxIbnaM'],
 			['nombre'=>'Grasberg Mine', 'url'=>'https://www.youtube.com/embed/l0EWgO0lCek'],
-			['nombre'=>'BHP Billiton', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns'],
-			['nombre'=>'video prueba', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns']
+			['nombre'=>'BHP Billiton', 'url'=>'https://www.youtube.com/embed/9U3_JVTPtns']			
 	);
 	
 	return view('viewVideos', ['titulo'=>'Videos', 'columnas'=>3,'videos'=>$data]);
@@ -229,6 +228,10 @@ Route::get('videos', function(){
  */
 
 Route::resource('noticia', 'NoticiasController'); 
+
+Route::post('noticia/{noticia}/updatepost', ['as'=>'noticia.updatepost', 'uses'=>'NoticiasController@update']);
+
+Route::post('noticia/{noticia}/deletepost', ['as'=>'noticia.deletepost', 'uses'=>'NoticiasController@destroy']);
 
 // Route::get('noticias/create', 'NoticiasController@create');
 
@@ -245,6 +248,8 @@ Route::resource('ofertaLaboral', 'OfertasController');
 
 //probando para ubicar el metodo update (no funciona igualemente)
 Route::post('ofertaLaboral/{ofertaLaboral}/updatepost', ['as'=>'ofertaLaboral.updatepost', 'uses'=>'OfertasController@update']);
+
+Route::post('ofertaLaboral/{ofertaLaboral}/deletepost', ['as'=>'ofertaLaboral.deletepost', 'uses'=>'OfertasController@destroy']);
 
 // Route::get('ofertaLaboral', 'OfertasController@index');
 
@@ -274,7 +279,11 @@ Route::get('registro', 'Auth\RegisterController@index');
 
 Route::resource('informacion', 'InformacionController');
 
-Route::get('informacion/getDownload', 'informacionController@getDownload');
+Route::post('informacion/{info}/updatepost', ['as'=>'informacion.updatepost', 'uses'=>'InformacionController@update']);
+
+Route::post('informacion/{info}/deletepost', ['as'=>'informacion.deletepost', 'uses'=>'InformacionController@destroy']);
+
+Route::get('informacion/getDownload/{idInfo}', 'InformacionController@getDownload');
 
 
 

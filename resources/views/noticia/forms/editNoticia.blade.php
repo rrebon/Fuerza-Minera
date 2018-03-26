@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<h1>Nueva Noticia</h1>
+		<h1>Modificar Noticia</h1>
 	</div>
 </div>
 
@@ -21,8 +21,10 @@
 
 <hr>
 
-
-{!! Form::model(array('action' => ['NoticiasController@update'], 'role'=>'form', 'files'=>true)) !!}
+{!! Form::model($noticia,array('route' => ['noticia.updatepost', $noticia->idNoticia],
+					  	'method'=> 'POST', 
+					  	'role'=>'form', 
+					  	'files'=>true)) !!} 
 	@include('noticia.forms.formNoticia', ['submitButtonText' => 'Modificar Noticia', 'noticia'=>$noticia])
 {!! Form::close() !!}}
 	

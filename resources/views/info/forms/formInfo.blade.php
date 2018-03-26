@@ -8,13 +8,13 @@
 				$user = Auth::user();
 				$fechaActual = Carbon\Carbon::now()->format("d/m/Y");				
 			?>
-			
+						
 			<div class='row form-group'>
 				<div class="col-sm-1">
 					{!! Form::label('titulo','Título', array('class'=> 'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-5">
-					{!! Form::text('titulo','', array('class'=>'form-control input-sm')) !!}
+					{!! Form::text('titulo', isset($info)?$info->titulo:'', array('class'=>'form-control input-sm')) !!}
 				</div>
 				<div class="col-sm-1 hidden">
 					{!! Form::label('fechaAlta','Fecha Publicación', array('class'=> 'etiquetaNegra')) !!}
@@ -28,7 +28,7 @@
 					{!! Form::label('texto', 'Texto', array('class'=>'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-10">
-					{!! Form::textarea('texto','', array('class'=>'form-control editor')) !!}
+					{!! Form::textarea('texto',isset($info)?$info->texto:'', array('class'=>'form-control editor')) !!}
 				</div>				
 			</div>	
 			<div class="row">

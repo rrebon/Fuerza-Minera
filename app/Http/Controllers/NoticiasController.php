@@ -54,7 +54,59 @@ class NoticiasController extends Controller
 	
 	public function edit ($idNoticia){
 		$noticia = Noticia::find($idNoticia);
-		return view('noticia.forms.editNoticia', ['noticia'=>$noticia]);
+		
+		return view('noticia.forms.editNoticia', compact('noticia'));
+		//return view('noticia.forms.editNoticia', ['noticia'=>$noticia]);
+	}
+	
+	public function update($idNoticia, NoticiaRequest $request){
+		$noticia = Noticia::findorfail($idNoticia);
+		
+		$disk = Storage::disk();				
+		
+		$path = storage_path('app/'.$noticia->urlImagenIntro);
+		
+		//si el request tiene un archivo
+		//borro el que tiene y seteo el nuevo
+		if(isset($request->urlImagenIntro)){
+			if(file_exists($path)){
+				unlink($path);
+			}
+			$path = $request->urlImagenIntro->store('public/noticias');
+		}
+		
+		
+		$input = $request->all();		
+				
+		//guardo la ruta donde esta guardada la imagen
+		$input['urlImagenIntro'] = $path;
+		
+		//lo hago vacio, por ahora no se usa
+		$input['urlCarpetaImagenes'] = "";
+			
+		$noticia->titulo = $input['titulo'];
+		$noticia->intro = $input['intro'];
+		$noticia->texto = $input['texto'];
+		$noticia->urlImagenIntro = $input['urlImagenIntro'];	
+		
+		$noticia->save();
+		
+		
+		return redirect('noticia');		
+	}
+	
+	public function destroy($idNoticia){
+		$noticia = Noticia::findOrFail($idNoticia);
+		
+		$path = storage_path('app/'.$noticia->urlImagenIntro);
+		
+		if(isset($request->urlImagenIntro))
+			if(file_exists($path))
+				unlink($path);			
+		
+		$noticia->delete();
+		
+		return redirect('noticias')->with('message', 'Se eliminó la noticia correctamente.');
 	}
 	
 	

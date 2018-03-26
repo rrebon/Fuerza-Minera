@@ -28,7 +28,7 @@
 					{!! Form::label('intro','Introducción', array('class'=> 'etiquetaNegra')) !!}
 				</div>
 				<div class="col-sm-10">
-					{!! Form::text('intro',isset($noticia)?$noticia->introduccion:'', array('class'=>'form-control input-sm')) !!}
+					{!! Form::text('intro',isset($noticia)?$noticia->intro:'', array('class'=>'form-control input-sm')) !!}
 				</div>
 			</div>
 			<div class='row form-group'>

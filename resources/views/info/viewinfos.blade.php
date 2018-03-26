@@ -14,7 +14,7 @@
 				<div class="row">
 					<h2>{{ $info->titulo }}</h2>
 					<small>{{ $info->texto }}</small>
-					<a href="{{ url('informacion/getDownload/'.$info.idInfo) }}"><button class="btn btn-lg">Descargar</button></a>
+					<a href="{{ url('informacion/getDownload/'.$info->idInfo) }}"><button class="btn btn-lg">Descargar</button></a>
 				</div>
 			</div>
 		@empty 

@@ -80,7 +80,8 @@ public function edit($idOferta)
  */
 public function update($idOferta, OfertaLaboralRequest $request)
 {
-	$request = OfertaLaboralRequest::capture();
+	//TODO: se rompe si no se carga archivo para la modificacion. Ni siquiera llega al metodo.
+	//$request = OfertaLaboralRequest::capture();
 	
 	$oferta = OfertaLaboral::findOrFail($idOferta);
 	
@@ -89,9 +90,7 @@ public function update($idOferta, OfertaLaboralRequest $request)
 	$disk = Storage::disk();
 		
 	$path = storage_path('app/'.$oferta->urlArchivo);
-	
-	$archivo = $request->urlArchivo;
-
+		
 	//si el request tiene un archivo
 	//borro el que tiene y seteo el nuevo
 	if(isset($request->urlArchivo)){
@@ -120,6 +119,20 @@ public function update($idOferta, OfertaLaboralRequest $request)
 	
 	//return $this->show($idOferta);
 }
+
+public function destroy($idoferta){
+	$oferta = OfertaLaboral::find($idoferta);
+	
+	$path = storage_path('app/'.$oferta->urlArchivo);
+	if(file_exists($path)){
+		unlink($path);
+	}
+	
+	$oferta->delete();
+	
+	return redirect('ofertaLaboral')->with('message', 'Oferta Eliminada');
+}
+
 //TODO: ver porque queda cacheada en una pagina la direccion de descarga idOferta=11
 public function getDownload($idOferta)
 {

@@ -42,12 +42,13 @@ class InformacionController extends Controller
 		$input = $request->all();
 		//hago la conversion de la fecha con el formato correspondiente
 		$input['fechaAlta'] = date_create_from_format("d/m/Y", $input['fechaAlta']);
+		$input['fechaBaja'] = $input['fechaAlta']; 
 	
 		$input['idUsuarioCreacion'] = \Auth::user()->id;
 		$input['urlArchivo'] = $path;
 		Informacion::create($input);
 	
-		return redirect('informacion');
+		return redirect('informacion')->with('message', 'Se creo información correctamente');
 	}
 	
 	public function show($idInfo){
@@ -65,7 +66,7 @@ class InformacionController extends Controller
 	{
 		$info = Informacion::findOrFail($idInfo);
 	
-		return view('info.forms.infoEdit', compact('info'));
+		return view('info.forms.editInfo', compact('info'));
 	}
 	
 	/**
@@ -85,20 +86,24 @@ class InformacionController extends Controller
 		return redirect('ofertaLaboral');
 	}
 	
-	public function getDownload($idOferta)
+	public function getDownload($idInfo)
 	{
 		$info = Informacion::findOrFail($idInfo);
 	
 		$file = Storage::disk()->get($info->urlArchivo);
+		
+		$path = storage_path('app/'.$info->urlArchivo);
 	
 		$mimeType = \Storage::mimeType($info->urlArchivo);
-	
+		
+		$ext = pathinfo($path, PATHINFO_EXTENSION);
+		
 		$headers = array(
 				'Content-Type: '.$mimeType,
 		);
+		
+		$nombreArchivo = $info->titulo.".".$ext;		
 	
-		$nombreArchivo = -$info->titulo.".pdf";
-	
-		return response()->download(storage_path('app/'.$info->urlArchivo),$nombreArchivo, $headers);
+		return response()->download($path,$nombreArchivo, $headers);
 	}
 }
