@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleFM.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker3.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/lightbox.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/nav-side-menu.css') }}">
 	
 	<script src="{{ asset('bootstrap/js/jquery.js') }}"></script>
 	<script src=" {{ asset('bootstrap/js/bootstrap.js') }}"></script>
@@ -15,5 +16,10 @@
 	<script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('locales/bootstrap-datepicker.es.min.js') }}"></script>
 	
+	<script type="text/javascript">
+		function redirigir(direccion){
+			window.location.href = direccion;
+		}	
+	</script>
 
 </head>

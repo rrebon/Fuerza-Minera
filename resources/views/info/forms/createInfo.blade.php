@@ -22,9 +22,14 @@
 
 <hr>
 
+<?php
+	$previousUrl =  url()->previous();
+	$onClick = "redirigir('".$previousUrl."')";
+	
+?>
 
 {!! Form::open(array('action' => ['InformacionController@store'], 'role'=>'form', 'files'=>true)) !!}
-	@include('info.forms.formInfo', ['submitButtonText' => 'Nueva Información'])
+	@include('info.forms.formInfo', ['submitButtonText' => 'Nueva Información', 'onclick'=>$onClick])
 {!! Form::close() !!}}
 	
 @endsection

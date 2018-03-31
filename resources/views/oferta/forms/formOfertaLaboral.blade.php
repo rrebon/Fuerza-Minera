@@ -61,7 +61,7 @@
 			</div>	
 			<div class="pull-right">								
 				{!! Form::submit($submitButtonText, array('class'=>'btn btn-primary'))!!}
-				{!! Form::submit('Cancelar', array('class'=>'btn btn-primary'))!!}		
+				{!! Form::button('Cancelar', array('class'=>'btn btn-primary', 'onclick'=>$onClick))!!}		
 			</div>
 			
 		</div>

@@ -11,7 +11,7 @@
 				<form class="navbar-form navbar-right" role="search">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Buscar">
-						<a href="" class="btn btn-md boton">Subir</a>
+						<a href="" class="btn btn-md boton">Buscar</a>
 					</div>
 				</form>
 			</div>

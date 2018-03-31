@@ -9,7 +9,8 @@ extends('layouts.app') @section('content')
 		</div>
 		<button type="submit" class="btn btn-default">Search</button>
 		<a href="" class="btn btn-primary">All</a> <a href=""
-			class="btn btn-primary">Create</a> {!! Form::close() !!} <br>
+			class="btn btn-primary">Create</a>
+	  {!! Form::close() !!} <br>
 		<table class="table table-condensed table-striped table-bordered">
 			<thead>
 				<tr>

@@ -1,3 +1,6 @@
+<?php
+use Illuminate\Support\Facades\Auth;
+?>
 <!--BARRA DE NAVEGACION-->
 <div class="container-fluid">	
 	<div class="row">
@@ -25,9 +28,15 @@
 								<li><a href="{{ url('videos') }}">Videos</a></li>
 							</ul>
 						</li>
-						<li><a href="{{ url('informacion') }}">Información</a></li>
-						<li><a href="{{ url('registro') }}">Registro</a></li>
-						<li><a href="{{ url('borrarSesion') }}">LogOut</a></li>
+						<li><a href="{{ url('informacion') }}">Información</a></li>						
+						
+						@if(Auth::check()) 							
+							<li><a href="{{ url('home') }}">Home</a></li>
+							<li><a href="{{ url('borrarSesion') }}">LogOut</a></li>
+						@else
+							<li><a href="{{ url('registro') }}">Registro</a></li>							
+						@endif						
+						
 					</ul>
 				</div>
 			</nav>

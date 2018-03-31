@@ -121,3 +121,14 @@ label{
 .icono{
 	position: relative;
 }
+.sidenav {
+    width: 100%;    
+    z-index: 1000;
+    top: relative;
+    left: 0px;
+    
+    overflow-x: hidden;
+    padding: 8px 0;
+}
+
+

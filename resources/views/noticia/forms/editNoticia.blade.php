@@ -21,11 +21,20 @@
 
 <hr>
 
+<?php
+	$previousUrl =  url()->previous();
+	$onClick = "redirigir('".$previousUrl."')";
+	
+?>
+
 {!! Form::model($noticia,array('route' => ['noticia.updatepost', $noticia->idNoticia],
 					  	'method'=> 'POST', 
 					  	'role'=>'form', 
 					  	'files'=>true)) !!} 
-	@include('noticia.forms.formNoticia', ['submitButtonText' => 'Modificar Noticia', 'noticia'=>$noticia])
+	@include('noticia.forms.formNoticia', ['submitButtonText' => 'Modificar Noticia', 'noticia'=>$noticia,'onclick'=>$onClick])
 {!! Form::close() !!}}
 	
+
+
+
 @endsection

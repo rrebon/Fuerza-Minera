@@ -21,8 +21,14 @@
 
 <hr>
 
+<?php
+	$previousUrl =  url()->previous();
+	$onClick = "redirigir('".$previousUrl."')";
+	
+?>
+
 {!! Form::open(array('action' => ['OfertasController@store'], 'role'=>'form', 'files'=>true)) !!}
-	@include('oferta.forms.formOfertaLaboral', ['submitButtonText' => 'Nueva Oferta'])
+	@include('oferta.forms.formOfertaLaboral', ['submitButtonText' => 'Nueva Oferta', 'onclick'=>$onClick])
 {!! Form::close() !!}
 
 

@@ -79,11 +79,34 @@ class InformacionController extends Controller
 	public function update(InformacionRequest $request, $idInfo)
 	{
 		$info = Informacion::findOrFail($idInfo);
+		$path = $info->urlArchivo;
+		
 		$input = $request->all();
+		//TODO:: que actualice el archivo por mas que no este seteado
+		if(isset($request->urlArchivo)){
+			if(file_exists($path)){
+				unlink($path);
+			}
+			$path = $request->urlArchivo->store('public/ofertasLaborales');
+		}
+		
 		var_dump($input);
 		$Info->update($input);
 	
-		return redirect('ofertaLaboral');
+		return redirect('informacion');
+	}
+	
+	public function destroy(InformacionRequest $request, $idInfo){
+		$info = Informacion::findOrFail($idInfo);
+		
+		$path = storage_path('app/'.$info->urlArchivo);
+		if(file_exists($path)){
+			unlink($path);
+		}
+		
+		$info->delete();
+		
+		return redirect('informacion');		
 	}
 	
 	public function getDownload($idInfo)

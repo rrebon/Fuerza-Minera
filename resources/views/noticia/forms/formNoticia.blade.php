@@ -47,11 +47,10 @@
 					{!! Form::file('urlImagenIntro') !!}
 				</div>
 			</div>	
-			<div class="pull-right">								
+			<div class="pull-right">				
 				{!! Form::submit($submitButtonText, array('class'=>'btn btn-primary'))!!}
-				{!! Form::submit('Cancelar', array('class'=>'btn btn-primary'))!!}		
-			</div>
-			
+				{!! Form::button('Cancelar', array('class'=>'btn btn-primary', 'onclick'=>$onClick))!!}		
+			</div>			
 		</div>
 	</div>
 </div>
