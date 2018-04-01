@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Persona;
+use App\Empresa;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('/');
+    	$user = \Auth::user();
+    	
+    	if($user->userable_type = 'App\Persona'){
+    		$relacion = Persona::find($user->userable_id);
+    	}else{
+    		$relacion = Empresa::find($user->userable_id);		
+    	}
+    	    	
+        return view('home', ['user'=>$user, 'relacion'=>$relacion]);
     }
 }

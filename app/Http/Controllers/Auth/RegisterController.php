@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/welcome';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -102,6 +102,15 @@ class RegisterController extends Controller
 	    $usuario->userable()->associate($relacion);
 	    $usuario->save();
         return $usuario;
+    }
+    
+    public function actualizarSatus($status){   
+    	session_start();
+    	if((null==session('comboId'))){
+    		session(['comboId' => 'nada']);    		
+    	}else{
+    		session(['comboId' => $status]);
+    	}
     }
     
 }

@@ -20,10 +20,36 @@
 		        $("#persona").hide();
 		        $("#empresa").show();
 		    }
+
+		    actualizarStatus();
 		}
-		</script>
+
+		//Actualiza la variable de sesion comboId
+		//para setear el valor del combo con el seleccionado 
+		//en caso de que se refresqu la pagina 
+		function actualizarStatus(){			 
+	        var valor = $('#status').val();
+	 
+	        $.ajax({
+	            url:    'registro/actualizarStatus/'+valor,
+	            type:   'get',	            
+	            success: function(data){
+		            //alert('success');	               
+	            },
+            	error: function(error){
+                	alert('error: '+error.message);
+            	}
+	        })	 
+	    }
+		
+		
+</script>
 
 @section('content')
+
+<?php 
+	$comboId = session('comboId');	
+?>
 
 <!--REGISTRO-->
 <div class="container">
@@ -36,16 +62,15 @@
 						<h2>Seleccione una opción:</h2>
 						<select id="status" name="status" onChange="mostrar(this.value);"
 							class="form-control" style="padding: 15px 12px; font-size: 15px;">
-							<option value="nada" selected>-</option>
-							<option value="persona">Persona</option>
-							<option value="empresa">Empresa</option>
+							<option value="nada" <?php echo ($comboId=="nada")?'selected':'' ?>>-</option>
+							<option value="persona" <?php echo ($comboId=="persona")?'selected':'' ?>>Persona</option>
+							<option value="empresa" <?php echo ($comboId=="empresa")?'selected':'' ?>>Empresa</option>							
 						</select>
 					</form>
 				</div>
-
+								
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					<div id="nada"></div>
-
 					<div id="persona" style="display: none;">
 						<form method="POST" action="{{ url('/register') }}">
 							<h2>Persona</h2>
@@ -73,10 +98,13 @@
 							</div>
 						</form>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- creo la funcion IIFE (Immediately Invoked Function Expression)  -->
+<!-- para que muestre la opcion seleccionanda en caso de que se refresque la pagina -->
+<?php echo "<script type='text/javascript'> (function(){ $('#status').trigger('change') })();</script>" ?>
+
 @endsection

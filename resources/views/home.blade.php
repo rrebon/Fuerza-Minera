@@ -2,10 +2,6 @@
 
 @section('content')
 
-<?php 
-	$user = Auth::user();
-?>
-
 <div class="container">
     <div class="row">
     	<div class="col-md-3">
@@ -25,7 +21,7 @@
 						<li>
 							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">Trabajo <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<a href="{{ url('ofertaLaboral/create') }}">Nueva Oferta Laboral</a>								
+								<li><a href="{{ url('ofertaLaboral/create') }}">Nueva Oferta Laboral</a></li>								
 							</ul>
 						</li>
 						<li>
@@ -46,15 +42,24 @@
 			</nav>
     	</div>
     	
+<!--     	Este seria el contenido del panel al aldo del menu -->
     	@yield('contenido')
-    		    
         <div class="col-md-9"> <!-- col-md-offset-2 -->
             <div class="panel panel-default">
                 <div class="panel-heading">Panel de control</div>
 
                 <div class="panel-body">
                     Bienvenido {{ $user->name }}
+                    <div class="row">
+                	<?php
+                		if($user->userable_type = 'App/Persona'){
+                			echo $relacion->nombre.', '.$relacion->apellido;                 			
+                		}else{
+							echo $relacion->razonSocial;
+                		}
+                	?>
                 </div>
+                </div>                
             </div>
         </div>
     </div>

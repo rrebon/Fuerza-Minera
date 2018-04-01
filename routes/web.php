@@ -53,11 +53,13 @@ Route::get('/contacto', function (){
 	return view('contacto');
 });
 
-Route::get('/home', function(){
-	return view('home');
-});
+// Route::get('/home', function(){	
+// 	return view('home');
+// }); 
 
-//TODO: hacer controlador hacer
+Route::get('/home', ['as'=>'home', 'uses'=>'HomeController@index']);
+
+
 Route::get('/info', function (){
 	return view('info');
 });
@@ -271,6 +273,8 @@ Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownloa
 
 //Route::resource('registro', 'Auth\RegisterController');
 Route::get('registro', 'Auth\RegisterController@index');
+
+Route::get('registro/actualizarStatus/{status}', 'Auth\RegisterController@actualizarSatus');
 
 
 /**
