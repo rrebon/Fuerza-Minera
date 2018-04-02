@@ -9,13 +9,13 @@
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#barra">
+							data-toggle="collapse" data-target="#barraHome">
 							<span class="sr-only">Menu</span> <span class="icon-bar"></span>
 							<span class="icon-bar"></span> <span class="icon-bar"></span>
 						</button>
 					</div>
 				</div>
-				<div class="collapse navbar-collapse" id="barra">
+				<div class="collapse navbar-collapse" id="barraHome">
 					<ul class="nav navbar-nav">
 						<li><a href="{{ url('home') }}">Mis Datos</a></li>						
 						<li>
@@ -42,26 +42,62 @@
 			</nav>
     	</div>
     	
+    	
+<?php 
+	function mostrarUsuario($user){
+		$html = "<table class='table table-condensed'>";
+ 		$html .= "<tr><td><strong>Usuario: </strong></td><td> ".$user->name." </td><td><strong>Email: </strong></td><td> ".$user->email." </td></tr>";
+		$html .= "</table>";		
+		return $html;
+	}
+
+	function mostrarPersona($persona){
+		$html = "<table class='table table-condensed table-dark'>";
+		$html .= "<tr><td><strong>Nombre: </strong></td><td> ".$persona->nombre." </td><td><strong>Apellido:</strong> </td><td> ".$persona->apellido." </td></tr>";
+		$html .= "<tr><td><strong>Telefono:</strong> </td><td>".$persona->telefono."</td><td></td><td></td></tr>";
+		$html .= "</table>";
+		return $html;
+	}
+	
+	function mostrarEmpresa($empresa){
+		$html = "<table class='table table-condensed table-dark'>";
+		$html .= "<tr><td><strong>Razón social:</strong></td><td>".$empresa->razonSocial."</td><td></td><td></td>";
+		$html .= "<tr><td>telefono:</td><td>".$empresa->telefono."</td><td>telefono2</td><td>".$empresa->telefono2."</td></tr>";
+		$html .= "<tr><td>Dirección:</td><td>".$empresa->direccion."</td><td>Localidad:</td><td>".$empresa->localidad."</td></tr>";
+		$html .= "</table>";
+		return $html;
+	}
+?>
+    	
 <!--     	Este seria el contenido del panel al aldo del menu -->
-    	@yield('contenido')
+    	
         <div class="col-md-9"> <!-- col-md-offset-2 -->
             <div class="panel panel-default">
-                <div class="panel-heading">Panel de control</div>
+                <div class="panel-heading">Datos de usuario</div>
 
                 <div class="panel-body">
-                    Bienvenido {{ $user->name }}
-                    <div class="row">
-                	<?php
-                		if($user->userable_type = 'App/Persona'){
-                			echo $relacion->nombre.', '.$relacion->apellido;                 			
-                		}else{
-							echo $relacion->razonSocial;
-                		}
-                	?>
+                <div class="row">               
+                	
+                		<div class="table-responsive">
+                		<?php echo mostrarUsuario($user); ?>
+                		</div>
+                		<div class="table-responsive">
+                			<?php
+	                			if($user->userable_type === 'App\Persona'){
+	                				echo mostrarPersona($relacion);
+	                			}else{
+	                				echo mostrarEmpresa($relacion);
+	                			}
+                			?>	                	
+                		</div>
+                		
+                	
                 </div>
                 </div>                
             </div>
         </div>
     </div>
 </div>
+
+
 @endsection

@@ -26,13 +26,16 @@ class HomeController extends Controller
     public function index()
     {
     	$user = \Auth::user();
-    	
-    	if($user->userable_type = 'App\Persona'){
-    		$relacion = Persona::find($user->userable_id);
-    	}else{
-    		$relacion = Empresa::find($user->userable_id);		
-    	}
     	    	
+    	
+//     	if($user->userable_type = 'App\Persona'){
+//     		$relacion = Persona::find($user->userable_id);
+//     	}else{
+//     		$relacion = Empresa::find($user->userable_id);		
+//     	}
+    	
+    	$relacion = $user->userable;
+    	
         return view('home', ['user'=>$user, 'relacion'=>$relacion]);
     }
 }
