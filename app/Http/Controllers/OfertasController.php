@@ -13,8 +13,20 @@ use Illuminate\Http\Request;
 class OfertasController extends Controller
 {
 public function index(){
-	$trabajos = OfertaLaboral::orderBy('fechaAlta','desc')->simplepaginate(3);
+	$trabajos = OfertaLaboral::orderBy('fechaAlta','desc')->simplepaginate(5);
 	return view('oferta.viewTrabajos', ['trabajos'=>$trabajos]);	
+}
+
+public function indexFiltered($filtro){
+	
+// 	$trabajos = DB::table('OfertasLaborales')
+// 				->where('titulo', 'like', '%'.$filtro.'%')
+// 				-get();
+	$trabajos = OfertaLaboral::orderBy('fechaAlta','desc')
+				->where('titulo', 'like', '%'.$filtro.'%')
+				->simplepaginate();
+	
+	return view('oferta.viewTrabajosFiltered', ['trabajos'=>$trabajos]);			
 }
 
 /**

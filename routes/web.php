@@ -267,6 +267,8 @@ Route::post('ofertaLaboral/{ofertaLaboral}/deletepost', ['as'=>'ofertaLaboral.de
 
 Route::get('ofertaLaboral/getDownload/{idOferta}', 'OfertasController@getDownload');
 
+Route::get('ofertaLaboral/indexFiltered/{filtro}', 'OfertasController@indexFiltered');
+
 /*
  * Rutas de Regristro de Usuarios (Empresas y Personas)
  */
