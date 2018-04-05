@@ -2,6 +2,10 @@
 @section('content')
 
 	<!-- Botnes de Editar y Eliminar -->	
+	<?php 
+		$user = Auth::user();
+		if(Auth::check() && $user->hasRole(['administrador'])):
+	?>
 	<div class="container">
 		<div class="row">
 			<div class="form-group">
@@ -16,27 +20,6 @@
 			</div>			
 		</div>
 	</div>
-
-	<!--ARTICULO-->
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<h1>{{ $noticia->titulo }} <small>{{ $noticia->fechaAlta }}</small></h1>
-				<div class="container">
-					<div class="row">{!! $noticia->texto !!}</div>					
-				</div>
-			</div>
-		</div>
-		<div class="row"><br><hr><br></div>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 thumbnail">
-				<a href="{{ url(Storage::url($noticia->urlImagenIntro)) }}" data-lightbox="imagen">
-					<img src="{{ url(Storage::url($noticia->urlImagenIntro)) }}" alt="">
-				</a>
-			</div>
-		</div>	
-	</div>
-	<br>
 	
 	<div class="modal" id="deleteConfirmacion" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -62,4 +45,28 @@
 		</div>
 	</div>
 	
+	<?php 
+		endif;		
+	?>
+
+	<!--ARTICULO-->
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<h1>{{ $noticia->titulo }} <small>{{ $noticia->fechaAlta }}</small></h1>
+				<div class="container">
+					<div class="row">{!! $noticia->texto !!}</div>					
+				</div>
+			</div>
+		</div>
+		<div class="row"><br><hr><br></div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 thumbnail">
+				<a href="{{ url(Storage::url($noticia->urlImagenIntro)) }}" data-lightbox="imagen">
+					<img src="{{ url(Storage::url($noticia->urlImagenIntro)) }}" alt="">
+				</a>
+			</div>
+		</div>	
+	</div>
+	<br>
 @endsection

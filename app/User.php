@@ -40,4 +40,23 @@ class User extends Authenticatable
     public function userable(){
     	return $this->morphTo();
     }
+    
+    public function roles(){
+    	return $this->belongsToMany(Role::class);
+    }
+    
+    public function  authorizedRoles($roles){
+    	if(is_array($roles)){
+    		return $this->hasAnyRole($roles) || abort(401, "No esta autorizado para esta acción.");
+    	}
+    	return $this->hasAnyRole($roles) || abort(401, "No esta autorizado para esta acción.");
+    }
+    
+    public function hasAnyRole($roles){
+    	return null !== $this->roles()->whereIn('nombre',$roles)->first();
+    }
+    
+    public function hasRole($role){
+    	return null !== $this->roles()->where('nombre',$role)->first();
+    }
 }

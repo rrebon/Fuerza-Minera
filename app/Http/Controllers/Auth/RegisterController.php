@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Persona;
 use App\Empresa;
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -97,10 +98,18 @@ class RegisterController extends Controller
 //             		'email' => $data['email'],
 //             		'password' => bcrypt($data['password']),
 //         			]);
+	    //si hago new User() no lo persiste hasta el save y nesecito el id para el role_user table
+
 		
 	    //guardo el usuario junto con la relacion
 	    $usuario->userable()->associate($relacion);
+	    
 	    $usuario->save();
+	    
+	    //asigno el rol usuario por defecto
+	    $usuario->roles()
+	    ->attach(Role::where('nombre','usuario')->first());
+	    
         return $usuario;
     }
     

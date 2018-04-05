@@ -50,8 +50,7 @@ public function store(OfertaLaboralRequest $request)
 	$disk = Storage::disk();
 	
 	$path = "";	
-	var_dump($request->urlArchivo);
-	exit();
+
 	$path = $request->urlArchivo->store('public/ofertasLaborales');	
 	
 	$input = $request->all();	

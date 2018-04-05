@@ -2,6 +2,8 @@
 
 @section('content')
 
+<?php $user=Auth::user();?>
+
 <div class="container">
     <div class="row">
     	<div class="col-md-3">
@@ -24,6 +26,7 @@
 								<li><a href="{{ url('ofertaLaboral/create') }}">Nueva Oferta Laboral</a></li>								
 							</ul>
 						</li>
+						<?php if($user->hasRole('administrador')):?>
 						<li>
 							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">Noticia <span class="caret"></span></a>
 							<ul class="dropdown-menu">
@@ -35,7 +38,8 @@
 							<ul class="dropdown-menu">
 								<li><a href="{{ url('informacion/create') }}">Nueva Información</a></li>
 							</ul>							
-						</li>						
+						</li>
+						<?php endif; ?>					
 						<li><a href="{{ url('borrarSesion') }}">LogOut</a></li>
 					</ul>
 				</div>
@@ -46,7 +50,7 @@
 <?php 
 	function mostrarUsuario($user){
 		$html = "<table class='table table-condensed'>";
- 		$html .= "<tr><td><strong>Usuario: </strong></td><td> ".$user->name." </td><td><strong>Email: </strong></td><td> ".$user->email." </td></tr>";
+ 		$html .= "<tr><td><strong>Usuario: </strong></td><td> ".$user->name." </td><td><strong>Email: </strong></td><td> ".$user->email." </td><td><strong>Rol: </strong></td><td> ".$user->roles[0]->nombre." </td></tr>";
 		$html .= "</table>";		
 		return $html;
 	}

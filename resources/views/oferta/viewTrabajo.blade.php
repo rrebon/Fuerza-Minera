@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')	
+	<?php 
+		//muestro los campos para editar o eliminar si es el administrador o es el usuario creador
+		$user = Auth::user();
+		if(Auth::check() && ($user->hasRole(['administrador']) || $user->id===$trabajo->idUsuarioCreacion)):
+	?>
 	<!-- Botnes de Editar y Eliminar -->	
 	<div class="container">
 		<div class="row">
@@ -17,6 +22,31 @@
 		</div>
 	</div>
 	
+	<!-- Modal de confirmar eliminacion -->
+	<div class="modal" id="deleteConfirmacion" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title">Confirmación de la oferta laboral</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+					<p><?php echo "¿Desea Eliminar la oferta laboral con titulo: ". $trabajo->titulo ."?" ?></p>
+					</br>
+				</div>
+				<div class="modal-footer">
+					<form action="{{ url('ofertaLaboral/'.$trabajo->idOferta.'/deletepost') }}" method="post">	
+						{!! csrf_field() !!}			
+						<button type="submit" class="btn btn-danger">Eliminar</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					</form>				
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php endif;?>
 	<!--PUBLICACION-->
 	
 	<div class="container">
@@ -35,31 +65,6 @@
 	</div>
 	<br>
 	
-	<!-- Modal de confirmar eliminacion -->
-	<div class="modal" id="deleteConfirmacion" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-			<div class="modal-header">
-			<h5 class="modal-title">Confirmación de la oferta laboral</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				</div>
-				<div class="modal-body">
-					<p><?php echo "¿Desea Eliminar la oferta laboral con titulo:". $trabajo->titulo ."?" ?></p>
-					</br>
-				</div>
-				<div class="modal-footer">
-					<form action="{{ url('ofertaLaboral/'.$trabajo->idOferta.'/deletepost') }}" method="post">	
-						{!! csrf_field() !!}			
-						<button type="submit" class="btn btn-danger">Eliminar</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					</form>				
-				</div>
-			</div>
-		</div>
-	</div>
-
 @endsection
 
 
