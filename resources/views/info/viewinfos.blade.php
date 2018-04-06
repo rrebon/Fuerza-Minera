@@ -2,6 +2,15 @@
 
 @section('content')
 	<div class="container">
+	
+		@if(session('message'))
+			<div class="alert alert-success">
+				<ul>
+					<li><?php echo session('message'); ?></li>
+				</ul>						
+			</div>
+		@endif
+		
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<h1>Información</small></h1>

@@ -23,6 +23,14 @@
 			}
 		</script>
 		
+		@if(session('message'))
+			<div class="alert alert-success">
+				<ul>
+					<li><?php echo session('message'); ?></li>
+				</ul>						
+			</div>
+		@endif
+		
 	
 		<div class="container">
 		<div class="row">

@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests\NoticiaRequest as NoticiaRequest;
 use App\Noticia as Noticia;
 use App\User as User;
-use App\Http\Requests\NoticiaRequest as NoticiaRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
 
 class NoticiasController extends Controller
 {
@@ -44,7 +43,7 @@ class NoticiasController extends Controller
 		
 		Noticia::create($input);	
 		
-		return redirect('noticia');
+		return redirect('noticia')->withMessage('Se creó la noticia correctamente.');
 	}
 	
 	public function show($idNoticia){
@@ -92,7 +91,7 @@ class NoticiasController extends Controller
 		$noticia->save();
 		
 		
-		return redirect('noticia');		
+		return redirect('noticia')->with('message','Se actualizó la noticia correctamente.');		
 	}
 	
 	public function destroy($idNoticia){
@@ -106,7 +105,7 @@ class NoticiasController extends Controller
 		
 		$noticia->delete();
 		
-		return redirect('noticias')->with('message', 'Se eliminó la noticia correctamente.');
+		return redirect('noticia')->with('message', 'Se eliminó la noticia correctamente.');
 	}
 	
 	

@@ -93,7 +93,7 @@ class InformacionController extends Controller
 		var_dump($input);
 		$Info->update($input);
 	
-		return redirect('informacion');
+		return redirect('informacion')->withMessage('Se actualizó la información correctamente.');
 	}
 	
 	public function destroy(InformacionRequest $request, $idInfo){
@@ -106,7 +106,7 @@ class InformacionController extends Controller
 		
 		$info->delete();
 		
-		return redirect('informacion');		
+		return redirect('informacion')->with('message', 'Se eliminó la información correctamente');		
 	}
 	
 	public function getDownload($idInfo)

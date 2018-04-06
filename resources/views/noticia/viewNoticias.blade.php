@@ -2,6 +2,20 @@
 
 @section('content')
 <div class="container">
+		@if(session('message'))
+			<div class="alert alert-success">
+				<ul>
+					<li><?php echo session('message'); ?></li>
+				</ul>						
+			</div>
+		@endif
+		
+		@if (session('status'))
+		    <div class="alert alert-success">
+		        {{ session('status') }}
+		    </div>
+		@endif
+		
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<h1>Noticias</h1>

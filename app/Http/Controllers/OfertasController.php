@@ -61,7 +61,7 @@ public function store(OfertaLaboralRequest $request)
 	$input['urlArchivo'] = $path;
 	OfertaLaboral::create($input);
 
-	return redirect('ofertaLaboral');
+	return redirect('ofertaLaboral')->with('message', 'Se creó la oferta laboral correctamente.');
 }
 
 public function show($idOferta){
@@ -125,7 +125,7 @@ public function update($idOferta, OfertaLaboralRequest $request)
 	
 	$oferta->save();
 	
-	return redirect('ofertaLaboral');
+	return redirect('ofertaLaboral')->with('message','Se modificó la oferta laboral correctamente.');
 	//$oferta->update($input);
 	
 	//return $this->show($idOferta);
@@ -141,7 +141,7 @@ public function destroy($idoferta){
 	
 	$oferta->delete();
 	
-	return redirect('ofertaLaboral')->with('message', 'Oferta Eliminada');
+	return redirect('ofertaLaboral')->with('message', 'Se eliminó la oferta laboral correctamente.');
 }
 
 //TODO: ver porque queda cacheada en una pagina la direccion de descarga idOferta=11
