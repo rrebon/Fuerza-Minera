@@ -11,8 +11,12 @@ class Noticiarequest extends FormRequest{
 	 */
 	public function authorize()
 	{
-		return true;
-	
+		if (!\Auth::check())
+			return false;
+		
+		$user = \Auth::user();		
+		
+		return $user->hasAnyRole(['administrador','desarrollador']);	
 	}
 	
 	/**

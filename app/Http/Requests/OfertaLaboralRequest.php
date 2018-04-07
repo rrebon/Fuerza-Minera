@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use App\OfertaLaboral;
 
 class OfertaLaboralRequest extends FormRequest
 {
@@ -14,8 +15,15 @@ class OfertaLaboralRequest extends FormRequest
      */
     public function authorize()
     {    	
-        	return true;
-
+    		if (!\Auth::check())
+    			return false;
+    		
+    		$user = \Auth::user();    		
+    		$oferta = OfertaLaboral::find($this->route('ofertaLaboral'));
+    		if($oferta == null)
+    			return true;
+    		
+        	return $user->hasAnyRole(['administrador', 'desarrollador']) || $user->id === $oferta->idUsuarioCreacion;
     }
 
     /**

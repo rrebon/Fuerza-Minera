@@ -13,7 +13,12 @@ class InformacionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+    	if (!\Auth::check())
+    		return false;
+    	
+    	$user = \Auth::user();
+    	
+        return $user->hasAnyRole(['administrador', 'desarrollador']);
     }
 
     /**
@@ -23,8 +28,25 @@ class InformacionRequest extends FormRequest
      */
     public function rules()
     {
+    	/*
+    	 * 		'titulo' => 'required|min:5|max:50',
+        		'texto' => 'required|min:50|max:500',
+        		'intro' => 'required|min:15|max:60',
+        		'fechaAlta' => 'required|date_format:"d/m/Y"',
+        		'urlArchivo' => 'file|max:5120',
+        		
+        		titulo',			
+				'texto',
+				'urlArchivo',
+				'idUsuarioCreacion',
+				'fechaAlta',
+				'fechaBaja'
+    	 */
+    	
         return [
-            //
+        		'titulo' => 'required|min:5|max:50',
+        		'texto' => 'required|min:50|max:500',
+        		'urlArchivo' => 'file|max:5120',
         ];
     }
 }
