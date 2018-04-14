@@ -42,6 +42,12 @@ return [
     */
 
     'disks' => [
+    	'localImg' => [
+    		'driver' => 'local',
+    		'root' => public_path(),
+    		'url'=>env('APP_URL'),
+    		'visibility'=> 'public'
+    	],	
     		
     	'publicLocal' => [
     			'driver' => 'local',
@@ -50,7 +56,7 @@ return [
     	],
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+             'root' => storage_path('app'),
         ],
 
         'public' => [

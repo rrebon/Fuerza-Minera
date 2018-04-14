@@ -61,9 +61,10 @@
 		</div>
 		<div class="row"><br><hr><br></div>
 		<div class="row">
+			<?php $urlImagenIntro = url(Storage::url('app/'.$noticia->urlImagenIntro)); ?> 	
 			<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 thumbnail">
-				<a href="{{ url(Storage::url($noticia->urlImagenIntro)) }}" data-lightbox="imagen">
-					<img src="{{ url(Storage::url($noticia->urlImagenIntro)) }}" alt="">
+				<a href="{{ $urlImagenIntro }}" data-lightbox="imagen">
+					<img src="{{ $urlImagenIntro }}" alt="">
 				</a>
 			</div>
 		</div>	

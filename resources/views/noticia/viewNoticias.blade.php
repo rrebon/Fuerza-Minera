@@ -1,3 +1,6 @@
+<?php
+use Illuminate\Support\Facades\Storage;
+?>
 @extends('layouts.app')
 
 @section('content')
@@ -21,10 +24,18 @@
 				<h1>Noticias</h1>
 			</div>
 			
+
+			
 			@forelse($noticias as $noticia)
+				<?php
+					//$file = Storage::disk('public')->get($noticia->urlImagenIntro);
+					
+// 					$path = public_path($noticia->urlImagenIntro);
+					$url = url(Storage::url('app/'.$noticia->urlImagenIntro));					
+				?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 thumbnail">
-					<img src="{{ url(Storage::url($noticia->urlImagenIntro)) }}" alt="">
-					<div class="caption">
+					<img src="{{ $url }}" alt="">					
+					<div class="caption">						
 						<h3>{{ $noticia->titulo }} <small> {{ $noticia->fechaAlta }} </small></h3>
 						<h4 class="hidden-xs">{{ $noticia->intro }}</h4>
 						<a href= "{{ url('noticia/'.$noticia->idNoticia) }}" style="text-decoration:none">Leer más</a>

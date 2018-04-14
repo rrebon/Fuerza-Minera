@@ -34,9 +34,9 @@ class OfertaLaboralRequest extends FormRequest
     public function rules()
     {
         return [
-        		'titulo' => 'required|min:5|max:50',
-        		'texto' => 'required|min:50|max:500',
-        		'intro' => 'required|min:15|max:60',
+        		'titulo' => 'required|min:1|max:255',
+        		'texto' => 'required|min:1|max:1024',
+        		'intro' => 'required|min:1|max:255',
         		'fechaAlta' => 'required|date_format:"d/m/Y"',
         		'urlArchivo' => 'file|max:5120',
         ];

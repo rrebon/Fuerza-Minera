@@ -17,12 +17,14 @@
         	<?php         	
 			$i=0; //contador
        		foreach ($data as $d){
-	       			
+       				$enlace = asset($d['enlace']);
+       				$imagen = asset($d['imagen']);
+       			
 	       			if($i===0)
 	       				echo '<div class="row">';
-	       			
+	       				
 	       				echo "<div class='col-xs-6 col-sm-4 col-md-4 col-lg-4 thumbnail'>
-	       						<a href='{$d['enlace']}'><img src='{$d['imagen']}'></a>
+	       						<a href='{$enlace}'><img src='{$imagen}'></a>
 	       						<div class='caption'>
 	       							<h3 class='hidden-xs'>{$d['titulo']}</h3>
        								<h4 class='visible-xs'>{$d['titulo']}</h4>

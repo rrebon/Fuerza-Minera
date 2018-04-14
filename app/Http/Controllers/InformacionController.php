@@ -96,7 +96,7 @@ class InformacionController extends Controller
 		return redirect('informacion')->withMessage('Se actualizó la información correctamente.');
 	}
 	
-	public function destroy(InformacionRequest $request, $idInfo){
+	public function destroy($idInfo){
 		$info = Informacion::findOrFail($idInfo);
 		
 		$path = storage_path('app/'.$info->urlArchivo);

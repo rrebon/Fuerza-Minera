@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
 				<label for="email" class="hidden-xs">Email:</label>
-				<input class="form-control hidden-xs" type="text" placeholder="Email" name="email" id="email" value="{{ old('email') }}" required autofocus>
+				<input class="form-control" type="text" placeholder="Email" name="email" id="email" value="{{ old('email') }}" required autofocus>
 				@if ($errors->has('email')) 
 					<span class="help-block"> 
 						<strong>{{ $errors->first('email') }}</strong>
@@ -14,7 +14,7 @@
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
 				<label for="contraseña" class="hidden-xs">Contraseña:</label>
-				<input class="form-control hidden-xs" type="password"placeholder="Contraseña" name="password" id="password" required>
+				<input class="form-control" type="password"placeholder="Contraseña" name="password" id="password" required>
 				@if ($errors->has('password')) 
 					<span class="help-block"> 
 						<strong>{{ $errors->first('password') }}</strong>

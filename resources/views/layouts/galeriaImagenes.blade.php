@@ -9,7 +9,7 @@
 			</div>
 		</div>
 			<?php
-				$discoLocal=Storage::disk('publicLocal');        	
+				$discoLocal=Storage::disk('localImg');				
          		$archivos=$discoLocal->files($directorio);  
          		$i=0; //contador
          	?>
