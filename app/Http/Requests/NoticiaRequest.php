@@ -29,7 +29,7 @@ class Noticiarequest extends FormRequest{
 		return [
 				'titulo' => 'required|min:5|max:50',
 				'intro' => 'required|min:5|max:200',
-				'texto' => 'required|min:50|max:3500',
+				'texto' => 'required|min:50|max:65535',
 				'intro' => 'required|min:15|max:60',
 				'fechaAlta' => 'required|date_format:"d/m/Y"',
 				'urlImagenIntro' => 'file|max:5120',

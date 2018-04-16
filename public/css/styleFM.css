@@ -89,7 +89,7 @@ h1{
 }
 
 p{
-	position: absolute;
+	/*  position: absolute;  */
 	font-family: "biko";
 	font-size: 18px;
 }

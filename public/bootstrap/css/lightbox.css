@@ -116,6 +116,7 @@ body.lb-disable-scrolling {
   -moz-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
   transition: opacity 0.6s;
+  margin : 0 !important;
 }
 
 .lb-nav a.lb-prev:hover {
@@ -124,7 +125,7 @@ body.lb-disable-scrolling {
 }
 
 .lb-nav a.lb-next {
-  width: 64%;
+  width: 34%;
   right: 0;
   float: right;
   background: url(../images/next.png) right 48% no-repeat;
@@ -134,6 +135,7 @@ body.lb-disable-scrolling {
   -moz-transition: opacity 0.6s;
   -o-transition: opacity 0.6s;
   transition: opacity 0.6s;
+  margin: 0 !important;
 }
 
 .lb-nav a.lb-next:hover {
