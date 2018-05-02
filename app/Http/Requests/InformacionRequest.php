@@ -44,8 +44,8 @@ class InformacionRequest extends FormRequest
     	 */
     	
         return [
-        		'titulo' => 'required|min:5|max:50',
-        		'texto' => 'required|min:50|max:500',
+        		'titulo' => 'required|min:1|max:255',
+        		'texto' => 'required|min:1|max:1024',
         		'urlArchivo' => 'file|max:5120',
         ];
     }

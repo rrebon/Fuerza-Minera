@@ -27,10 +27,9 @@ class Noticiarequest extends FormRequest{
 	public function rules()
 	{
 		return [
-				'titulo' => 'required|min:5|max:50',
-				'intro' => 'required|min:5|max:200',
-				'texto' => 'required|min:50|max:65535',
-				'intro' => 'required|min:15|max:60',
+				'titulo' => 'required|min:1|max:200',
+				'intro' => 'required|min:1|max:200',
+				'texto' => 'required|min:1|max:65535',				
 				'fechaAlta' => 'required|date_format:"d/m/Y"',
 				'urlImagenIntro' => 'file|max:5120',
 		];

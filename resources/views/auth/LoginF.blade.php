@@ -43,7 +43,7 @@
 			<!--REGISTRO RESONSIVE-->
 			<div class="col-xs-6 col-sm-6 col-md-12 col-lg-6 col-lg-offset-6">
 				<input class="form-control btn-sm boton hidden-xs" type="submit" value="Ingresar" name="ingresar" id="ingresar"> 
-				<a href="{{ url('auth.registro') }}" class="hidden-lg hidden-md hidden-sm btn btn-sm boton">Ingresar</a>					
+				<a href="{{ url('/login') }}" class="hidden-lg hidden-md hidden-sm btn btn-sm boton">Ingresar</a>					
 			</div>
 			@if(Auth::check()==false)
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

@@ -7,6 +7,7 @@ use App\Http\Controllers\OfertasController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\Auth\RegisterController;
 use Doctrine\DBAL\Schema\Index;
+use App\Http\Controllers\ContactoController;
 
 
 /*
@@ -49,9 +50,12 @@ Route::get('/quienesSomos', function (){
 	return view('quienesSomos');
 });
 
-Route::get('/contacto', function (){
-	return view('contacto');
-});
+/*
+ * Rutas de los contactos
+ */
+Route::get('/contacto', ['as'=>'contacto', 'uses'=>'ContactoController@index']);
+
+Route::post('/enviaConsulta', ['as'=>'enviaConsulta', 'uses'=>'ContactoController@Consultar']);
 
 // Route::get('/home', function(){	
 // 	return view('home');
